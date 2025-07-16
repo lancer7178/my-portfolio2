@@ -13,8 +13,8 @@ const navLinks = [
 ];
 
 const socialLinks = [
-  { icon: <FaGithub />, href: "https://github.com/yourusername", label: "GitHub" },
-  { icon: <FaLinkedin />, href: "https://linkedin.com/in/yourusername", label: "LinkedIn" },
+  { icon: <FaGithub />, href: "https://github.com/lancer7178", label: "GitHub" },
+  { icon: <FaLinkedin />, href: "https://linkedin.com/in/abdul-atif-selem-8521a7281", label: "LinkedIn" },
 ];
 
 export default function Navbar() {

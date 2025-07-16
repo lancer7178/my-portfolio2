@@ -12,8 +12,8 @@ export default function Footer({ year, name }) {
       {/* Decorative SVG removed */}
       {/* <img src="/b5.svg" ... /> removed */}
       <div className="flex gap-4 justify-center mb-2">
-        <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" className="hover:text-[#6EE7B7] text-xl"><FaGithub /></a>
-        <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" className="hover:text-[#6EE7B7] text-xl"><FaLinkedin /></a>
+        <a href="https://github.com/lancer7178" target="_blank" rel="noopener noreferrer" className="hover:text-[#6EE7B7] text-xl"><FaGithub /></a>
+        <a href="https://linkedin.com/in/abdul-atif-selem-8521a7281" target="_blank" rel="noopener noreferrer" className="hover:text-[#6EE7B7] text-xl"><FaLinkedin /></a>
       </div>
       <div className="z-10">
         Copyright © {year} {name} | All rights reserved.
