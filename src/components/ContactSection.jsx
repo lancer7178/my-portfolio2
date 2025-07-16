@@ -1,15 +1,17 @@
 "use client";
+
 import { useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { FaRegCopy, FaCheck } from "react-icons/fa";
 import emailjs from "@emailjs/browser";
 
 export default function ContactSection({
-  email = "your@email.com",
-  cvLink = "/cv.pdf",
+  email = "abdlatefkhatib@email.com",
+  cvLink = "/public/AbdulatifSelemResume.pdf",
 }) {
   const [copied, setCopied] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const form = useRef();
 
   const handleCopy = () => {
@@ -20,21 +22,24 @@ export default function ContactSection({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     emailjs
       .sendForm(
-        "service_pzh78vj", // ✅ Service ID
-        "template_g48ufwr", // ✅ Template ID
+        "service_pzh78vj",
+        "template_g48ufwr",
         form.current,
-        "-vAphwlP-xaTdFksd" // ✅ Public Key (User ID)
+        "-vAphwlP-xaTdFksd"
       )
       .then(
         () => {
+          setIsLoading(false);
           setSubmitted(true);
           form.current.reset();
           setTimeout(() => setSubmitted(false), 3000);
         },
         () => {
+          setIsLoading(false);
           alert("❌ Failed to send message. Please try again.");
         }
       );
@@ -42,105 +47,134 @@ export default function ContactSection({
 
   return (
     <motion.section
-      className="relative max-w-2xl mx-auto py-24 px-4 bg-[#101014] overflow-visible"
+      id="contact"
+      className="relative max-w-3xl mx-auto py-24 px-6 bg-[#101014] text-white"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
       variants={{
         hidden: { opacity: 0, y: 40 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.8, type: "spring" } },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.8, type: "spring" },
+        },
       }}
-      id="contact"
     >
-      <div className="flex flex-col items-center mb-12">
-        <h2 className="text-4xl sm:text-5xl font-extrabold text-white mb-2 tracking-tight">Contact</h2>
-        <div className="w-24 h-1 bg-gradient-to-r from-[#6EE7B7] via-[#3B82F6] to-[#9333EA] rounded-full mb-4" />
-        <p className="text-gray-300 text-lg mb-2 text-center">
-          Ready to take your digital presence to the next level?
-        </p>
-        <p className="text-gray-400 text-base mb-4 text-center">
-          Reach out to me today and let&apos;s discuss how I can help you achieve your goals.
-        </p>
-      </div>
-
+      {/* Header */}
       <motion.div
-        className="relative z-10 bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 p-8 flex flex-col gap-8"
+        className="text-center mb-16 max-w-2xl mx-auto"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, type: "spring" }}
+      >
+        <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-[#6EE7B7] via-[#3B82F6] to-[#9333EA] bg-clip-text text-transparent">
+          Contact Me
+        </h2>
+        <div className="h-1 w-24 bg-[#6EE7B7] mt-4 mx-auto rounded-full shadow-md" />
+        <p className="mt-6 text-gray-300 text-lg leading-relaxed">
+          Ready to elevate your brand or start a new project?
+          <br className="hidden sm:block" />
+          Let’s connect and build something amazing together.
+        </p>
+      </motion.div>
+
+      {/* Card */}
+      <motion.div
+        className="relative z-10 bg-white/5 backdrop-blur-xl rounded-3xl shadow-xl border border-white/10 p-8 flex flex-col gap-8 transition-all duration-300"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, type: "spring" }}
       >
-        {/* Copy Email + Download CV */}
-        <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+        {/* Actions */}
+        <div className="flex flex-col sm:flex-row gap-4 items-center justify-start">
           <motion.button
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.96 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.97 }}
             onClick={handleCopy}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#18181b] border border-[#232336] text-white hover:bg-[#232336] transition-colors"
+            className="flex items-center gap-2 px-5 py-2.5 text-sm rounded-full bg-[#18181b] border border-[#232336] text-white hover:bg-[#232336] transition-colors"
           >
             {copied ? (
               <FaCheck className="text-[#6EE7B7] animate-bounce" />
             ) : (
-              <FaRegCopy className="transition-transform group-hover:scale-110" />
+              <FaRegCopy />
             )}
-            Copy my email address
+            {copied ? "Email Copied!" : "Copy my email"}
           </motion.button>
 
           <motion.a
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.96 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.97 }}
             href={cvLink}
             download
-            className="px-4 py-2 rounded-full bg-gradient-to-r from-[#6EE7B7] via-[#3B82F6] to-[#9333EA] text-black font-bold shadow hover:opacity-90 transition-opacity"
+            className="px-5 py-2.5 text-sm rounded-full bg-gradient-to-r from-[#6EE7B7] via-[#3B82F6] to-[#9333EA] text-black font-bold shadow hover:opacity-90 transition"
           >
-            Get My CV
+            Download CV
           </motion.a>
         </div>
 
-        {/* Contact Form */}
-        <form ref={form} className="flex flex-col gap-4" onSubmit={handleSubmit}>
+        {/* Form */}
+        <form
+          ref={form}
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-5"
+        >
           <div className="flex flex-col sm:flex-row gap-4">
             <input
               type="text"
               name="from_name"
               placeholder="Your Name"
-              className="flex-1 bg-[#18181b] border border-[#232336] rounded px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#6EE7B7]"
               required
+              className="flex-1 px-4 py-3 rounded bg-[#18181b] border border-[#232336] text-white placeholder-gray-500 focus:ring-2 focus:ring-[#6EE7B7] outline-none"
             />
             <input
               type="email"
               name="from_email"
               placeholder="Your Email"
-              className="flex-1 bg-[#18181b] border border-[#232336] rounded px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#6EE7B7]"
               required
+              className="flex-1 px-4 py-3 rounded bg-[#18181b] border border-[#232336] text-white placeholder-gray-500 focus:ring-2 focus:ring-[#6EE7B7] outline-none"
             />
           </div>
+
           <textarea
             name="message"
             placeholder="Your Message"
-            className="bg-[#18181b] border border-[#232336] rounded px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#6EE7B7]"
-            rows={5}
+            rows="5"
             required
-          />
+            className="px-4 py-3 rounded bg-[#18181b] border border-[#232336] text-white placeholder-gray-500 focus:ring-2 focus:ring-[#6EE7B7] outline-none"
+          ></textarea>
 
           <motion.button
             type="submit"
-            className="bg-gradient-to-r from-[#6EE7B7] via-[#3B82F6] to-[#9333EA] text-black font-bold py-3 rounded shadow hover:opacity-90 transition-opacity text-lg"
+            disabled={isLoading}
+            className={`relative bg-gradient-to-r from-[#6EE7B7] via-[#3B82F6] to-[#9333EA] text-black font-bold py-3 rounded-md text-lg shadow transition-all duration-300 ${
+              isLoading ? "opacity-70 cursor-not-allowed" : "hover:opacity-90"
+            }`}
             whileTap={{ scale: 0.97 }}
-            whileHover={{ scale: 1.04 }}
+            whileHover={{ scale: isLoading ? 1 : 1.04 }}
           >
-            Send Message
+            {isLoading ? (
+              <div className="flex items-center justify-center gap-2">
+                <span className="w-4 h-4 border-2 border-t-transparent border-black rounded-full animate-spin" />
+                Sending...
+              </div>
+            ) : (
+              "Send Message"
+            )}
           </motion.button>
 
-          {submitted && (
-            <motion.div
-              className="text-[#6EE7B7] text-center mt-2"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              ✅ Thank you! Your message has been sent.
-            </motion.div>
-          )}
+          <AnimatePresence>
+            {submitted && (
+              <motion.div
+                className="text-[#6EE7B7] text-center font-medium mt-2"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+              >
+                ✅ Thank you! Your message was sent successfully.
+              </motion.div>
+            )}
+          </AnimatePresence>
         </form>
       </motion.div>
     </motion.section>

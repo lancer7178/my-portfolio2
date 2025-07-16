@@ -13,8 +13,16 @@ const navLinks = [
 ];
 
 const socialLinks = [
-  { icon: <FaGithub />, href: "https://github.com/lancer7178", label: "GitHub" },
-  { icon: <FaLinkedin />, href: "https://linkedin.com/in/abdul-atif-selem-8521a7281", label: "LinkedIn" },
+  {
+    icon: <FaGithub />,
+    href: "https://github.com/lancer7178",
+    label: "GitHub",
+  },
+  {
+    icon: <FaLinkedin />,
+    href: "https://linkedin.com/in/abdul-atif-selem-8521a7281",
+    label: "LinkedIn",
+  },
 ];
 
 export default function Navbar() {
@@ -33,53 +41,49 @@ export default function Navbar() {
 
   return (
     <motion.nav
-      className="fixed top-0 left-0 w-full z-50 bg-[#101014]/80 backdrop-blur-md border-b border-[#232336] shadow-md"
+      className="fixed top-0 left-0 w-full z-50 bg-[#101014]/80 backdrop-blur-lg border-b border-white/10"
       initial={{ y: -60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, type: "spring" }}
     >
-      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        {/* Desktop Nav */}
-        <div className="hidden sm:flex gap-6 items-center">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        {/* Left - Nav Links (Desktop) */}
+        <div className="hidden sm:flex gap-6">
           {navLinks.map((link) => (
-            <a
+            <button
               key={link.label}
-              href={link.href}
-              className="text-sm font-medium text-gray-300 hover:text-[#6EE7B7] transition-colors duration-300"
-              onClick={(e) => {
-                e.preventDefault();
-                handleScroll(link.href);
-              }}
+              onClick={() => handleScroll(link.href)}
+              className="text-sm text-gray-300 hover:text-white font-medium transition"
             >
               {link.label}
-            </a>
+            </button>
           ))}
         </div>
 
-        {/* Social Icons (hidden on mobile) */}
-        <div className="hidden sm:flex gap-4 text-xl items-center">
+        {/* Right - Social Icons (Desktop) */}
+        <div className="hidden sm:flex items-center gap-5 text-lg text-gray-400">
           {socialLinks.map((social) => (
             <motion.a
               key={social.label}
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-[#6EE7B7]"
-              aria-label={social.label}
-              whileHover={{ scale: 1.2 }}
+              className="hover:text-white transition"
+              whileHover={{ scale: 1.15 }}
               whileTap={{ scale: 0.95 }}
+              aria-label={social.label}
             >
               {social.icon}
             </motion.a>
           ))}
         </div>
 
-        {/* Mobile Menu Icon */}
+        {/* Hamburger (Mobile) */}
         <div className="sm:hidden">
           <button
             onClick={() => setIsMenuOpen((prev) => !prev)}
-            className="text-gray-300 text-2xl focus:outline-none"
-            aria-label="Toggle menu"
+            className="text-2xl text-white focus:outline-none"
+            aria-label="Toggle Menu"
           >
             {isMenuOpen ? <FaTimes /> : <FaBars />}
           </button>
@@ -90,34 +94,30 @@ export default function Navbar() {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            className="sm:hidden bg-[#18181b] border-t border-[#232336] px-6 py-4 flex flex-col gap-4"
+            className="sm:hidden px-6 py-4 flex flex-col gap-4 bg-[#18181b] border-t border-white/10"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
           >
             {navLinks.map((link) => (
-              <a
+              <button
                 key={link.label}
-                href={link.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleScroll(link.href);
-                }}
-                className="text-gray-200 font-medium hover:text-[#6EE7B7] transition"
+                onClick={() => handleScroll(link.href)}
+                className="text-base text-gray-300 text-left font-medium hover:text-white transition"
               >
                 {link.label}
-              </a>
+              </button>
             ))}
 
-            <div className="flex gap-4 pt-2">
+            <div className="flex gap-5 pt-2 text-lg text-gray-400">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-[#6EE7B7] text-xl"
+                  className="hover:text-white transition"
                 >
                   {social.icon}
                 </a>

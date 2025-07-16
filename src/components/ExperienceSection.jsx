@@ -1,7 +1,10 @@
+"use client";
+
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-// Array of unique SVG avatar fallback styles
+// Avatar SVG fallback styles
+
 const avatarFallbacks = [
   // Style 1: Green-Blue Gradient, Circle
   () => (
@@ -64,7 +67,6 @@ const avatarFallbacks = [
 
 function ExperienceImage({ src, alt, title, idx }) {
   if (!src) {
-    // Fallback: unique SVG avatar based on index
     const Avatar = avatarFallbacks[idx % avatarFallbacks.length];
     return (
       <div className="w-20 h-20 rounded-full shadow-lg mx-auto mt-6 mb-2 flex items-center justify-center bg-transparent">
@@ -80,7 +82,7 @@ function ExperienceImage({ src, alt, title, idx }) {
         width={80}
         height={80}
         className="object-cover w-full h-full"
-        unoptimized={src && src.startsWith("http")}
+        unoptimized={src?.startsWith("http")}
       />
     </div>
   );
@@ -89,33 +91,68 @@ function ExperienceImage({ src, alt, title, idx }) {
 export default function ExperienceSection({ experiences }) {
   return (
     <motion.section
-      className="relative max-w-5xl mx-auto py-20 px-4 bg-[#101014] overflow-hidden"
+      id="experience"
+      className="relative max-w-6xl mx-auto py-24 px-6 md:px-12 bg-[#101014] text-white"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
-      variants={{ hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, type: 'spring' } } }}
-      id="experience"
+      variants={{
+        hidden: { opacity: 0, y: 40 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.8, type: "spring" },
+        },
+      }}
     >
-      <h2 className="text-4xl font-extrabold mb-12 text-white text-center tracking-tight drop-shadow-lg">My Work Experience</h2>
-      <div className="grid gap-10 sm:grid-cols-2">
+      <motion.div
+        initial={{ opacity: 0, x: -40 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8 }}
+        className="mb-16"
+      >
+        <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-[#6EE7B7] via-[#3B82F6] to-[#9333EA] bg-clip-text text-transparent drop-shadow text-left sm:text-center">
+          My Work Experience
+        </h2>
+        <div className="h-1 w-24 bg-[#6EE7B7] mt-4 rounded-full sm:mx-auto" />
+      </motion.div>
+
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
         {experiences.map((exp, idx) => (
           <motion.div
             key={idx}
-            className="relative bg-white/10 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/20 overflow-hidden flex flex-col h-full hover:scale-[1.04] hover:shadow-[#6EE7B7]/40 transition-transform duration-300 group"
-            whileHover={{ scale: 1.06, boxShadow: "0 0 32px 0 #6EE7B7" }}
-            initial={{ opacity: 0, y: 30, boxShadow: "0 0 0px 0 #6EE7B7" }}
+            className="bg-[#18181b] rounded-3xl shadow-xl border border-[#2a2a2f] overflow-hidden flex flex-col h-full group hover:border-[#6EE7B7] hover:shadow-[#6EE7B7]/30 transition-all duration-300"
+            whileHover={{ scale: 1.03 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: idx * 0.1, duration: 0.7, type: 'spring' }}
+            transition={{
+              delay: idx * 0.1,
+              duration: 0.7,
+              type: "spring",
+            }}
           >
-            <ExperienceImage src={exp.image} alt={exp.title} title={exp.title} idx={idx} />
-            <div className="flex-1 flex flex-col p-8 gap-2 items-center text-center">
-              <h3 className="text-xl font-bold mb-1 text-white drop-shadow">{exp.title}</h3>
-              <span className="text-[#6EE7B7] font-semibold mb-2 text-base">{exp.role}</span>
-              <p className="text-gray-200 flex-1 text-base mb-2">{exp.description}</p>
+            <ExperienceImage
+              src={exp.image}
+              alt={exp.title}
+              title={exp.title}
+              idx={idx}
+            />
+
+            <div className="flex-1 flex flex-col px-6 pb-8 pt-4 text-center items-center gap-2">
+              <h3 className="text-xl font-semibold text-white">{exp.title}</h3>
+              <span className="text-[#6EE7B7] font-medium text-base mb-1">
+                {exp.role}
+              </span>
+              <p className="text-gray-300 text-sm leading-relaxed">
+                {exp.description}
+              </p>
             </div>
           </motion.div>
         ))}
       </div>
     </motion.section>
   );
-} 
+}
+
+
+
