@@ -1,6 +1,16 @@
 import { motion } from "framer-motion";
-import { FaFigma, FaReact, FaJs, FaHtml5, FaCss3Alt, FaBootstrap, FaWordpress } from "react-icons/fa";
-import { SiNextdotjs, SiTailwindcss } from "react-icons/si";
+import {
+  FaHtml5,
+  FaCss3Alt,
+  FaJs,
+  FaBootstrap,
+  FaFigma,
+  FaReact,
+  FaWordpress,
+  FaGithub,
+  FaGitAlt,
+} from "react-icons/fa";
+import { SiTailwindcss, SiNextdotjs } from "react-icons/si";
 
 const defaultStack = [
   { name: "HTML", icon: <FaHtml5 className="text-[#e34c26]" /> },
@@ -12,7 +22,11 @@ const defaultStack = [
   { name: "React.js", icon: <FaReact className="text-[#61dafb]" /> },
   { name: "Next.js", icon: <SiNextdotjs className="text-white" /> },
   { name: "WordPress", icon: <FaWordpress className="text-[#21759b]" /> },
+  { name: "Git", icon: <FaGitAlt className="text-[#f34f29]" /> },
+  { name: "GitHub", icon: <FaGithub className="text-[#ffffff]" /> },
 ];
+
+
 
 export default function TechStackSection({ techStack = defaultStack }) {
   return (
