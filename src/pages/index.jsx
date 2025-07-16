@@ -6,6 +6,7 @@ import ProjectsSection from "../components/ProjectsSection";
 import ContactSection from "../components/ContactSection";
 import TechStackSection from "../components/TechStackSection";
 import ExperienceSection from "../components/ExperienceSection";
+import Head from "next/head";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -60,7 +61,15 @@ const projects = [
     image: "/Ani.png", // Place this image in public/
     link: "https://lancer7178.github.io/Ani-watched/",
     rating: 5,
-    technologies: ["html", "css", "Tailwind.js", "bootstrap", "Tailwind CSS", "JS" , "Jquery" ],
+    technologies: [
+      "html",
+      "css",
+      "Tailwind.js",
+      "bootstrap",
+      "Tailwind CSS",
+      "JS",
+      "Jquery",
+    ],
   },
   {
     title: "Dr. Abdel-Moneim's Clinic",
@@ -69,7 +78,14 @@ const projects = [
     image: "/Dr.abdelMonem.png", // Place this image in public/
     link: "https://dr-abdel-moneim.vercel.app/  ",
     rating: 5,
-    technologies: ["react", "next.js", "Tailwind CSS", "framer-motion", "WordPress", "REST API"],
+    technologies: [
+      "react",
+      "next.js",
+      "Tailwind CSS",
+      "framer-motion",
+      "WordPress",
+      "REST API",
+    ],
   },
   {
     title: "Hayah Ava Healthcare",
@@ -78,7 +94,14 @@ const projects = [
     image: "/hayah-av.png", // Place this image in public/
     link: "https://hayah-av.vercel.app/",
     rating: 5,
-    technologies: [ "react", "next.js", "Tailwind CSS", "framer-motion", "WordPress", "REST API", ],
+    technologies: [
+      "react",
+      "next.js",
+      "Tailwind CSS",
+      "framer-motion",
+      "WordPress",
+      "REST API",
+    ],
   },
   {
     title: "Medizen Medical Website",
@@ -87,7 +110,14 @@ const projects = [
     image: "/medizen.png", // Place this image in public/
     link: "https://medizen-snowy.vercel.app/",
     rating: 5,
-    technologies: ["react", "next.js", "Tailwind CSS", "framer-motion","WordPress", "REST API",  ],
+    technologies: [
+      "react",
+      "next.js",
+      "Tailwind CSS",
+      "framer-motion",
+      "WordPress",
+      "REST API",
+    ],
   },
 ];
 const skills = [
@@ -158,35 +188,44 @@ const experiences = [
 
 export default function Home() {
   return (
-    <div
-      className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-[#101014] text-white font-[family-name:var(--font-geist-sans)] transition-colors duration-500 pt-16`}
-    >
-      <HeroSection
-        name="Abdulatif"
-        subtitle="A passionate Front-End Developer crafting beautiful web experiences."
-        logoSrc="/logo.svg"
-        buttonText="Show my work"
-        onButtonClick={() => {
-          const target = document.querySelector("#projects");
-          if (target) {
-            window.scrollTo({
-              top: target.offsetTop - 60,
-              behavior: "smooth",
-            });
-          }
-        }}
-      />
-      <AboutSection
-        intro={aboutIntro}
-        values={aboutValues}
-        approach={aboutApproach}
-      />
-      <TechStackSection />
-      <ProjectsSection projects={projects} />
+    <>
+      <Head>
+        <title>My Portfolio</title>
+      </Head>
 
-      {/* <SkillsSection skills={skills} /> */}
-      <ExperienceSection experiences={experiences} />
-      <ContactSection email="abdulatif@email.com" cvLink="/AbdulatifSelemResume.pdf" />
-    </div>
+      <div
+        className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-[#101014] text-white font-[family-name:var(--font-geist-sans)] transition-colors duration-500 pt-16`}
+      >
+        <HeroSection
+          name="Abdulatif"
+          subtitle="A passionate Front-End Developer crafting beautiful web experiences."
+          logoSrc="/logo.svg"
+          buttonText="Show my work"
+          onButtonClick={() => {
+            const target = document.querySelector("#projects");
+            if (target) {
+              window.scrollTo({
+                top: target.offsetTop - 60,
+                behavior: "smooth",
+              });
+            }
+          }}
+        />
+        <AboutSection
+          intro={aboutIntro}
+          values={aboutValues}
+          approach={aboutApproach}
+        />
+        <TechStackSection />
+        <ProjectsSection projects={projects} />
+
+        {/* <SkillsSection skills={skills} /> */}
+        <ExperienceSection experiences={experiences} />
+        <ContactSection
+          email="abdulatif@email.com"
+          cvLink="/AbdulatifSelemResume.pdf"
+        />
+      </div>
+    </>
   );
 }
