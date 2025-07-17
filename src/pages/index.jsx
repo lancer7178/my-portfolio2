@@ -2,10 +2,10 @@ import localFont from "next/font/local";
 import HeroSection from "../components/HeroSection";
 import AboutSection from "../components/AboutSection";
 import ProjectsSection from "../components/ProjectsSection";
-// import SkillsSection from "../components/SkillsSection";
 import ContactSection from "../components/ContactSection";
 import TechStackSection from "../components/TechStackSection";
 import ExperienceSection from "../components/ExperienceSection";
+import SkillsSection from "@/components/SkillsSection";
 import Head from "next/head";
 
 const geistSans = localFont({
@@ -121,43 +121,30 @@ const projects = [
   },
 ];
 const skills = [
-  "React",
-  "Next.js",
-  "Tailwind CSS",
-  "JavaScript",
-  "TypeScript",
   "HTML",
   "CSS",
-  "Figma",
+  "Tailwind CSS",
+  "Bootstrap",
+  "JavaScript",
+  "jQuery",
+  "TypeScript",
+  "React",
+  "Next.js",
   "Git",
   "GitHub",
+  "RESTful APIs",
+  "WordPress",
+  "C++",
+  "MySQL",
+  "Figma",
   "UI/UX Design",
   "Responsive Design",
-  "Web Development",
-  "Front-End Development",
   "Problem Solving",
-  "Collaboration",
-  "Communication",
-  "Agile Methodologies",
-  "Version Control",
-  "Cross-Browser Compatibility",
-  "Performance Optimization",
-  "Accessibility (a11y)",
-  "RESTful APIs",
   "SEO Basics",
-  "Testing and Debugging",
-  "Code Review",
   "Continuous Learning",
   "Creative Thinking",
-  "Time Management",
-  "Attention to Detail",
-  "User-Centered Design",
-  "Prototyping",
-  "Wireframing",
-  "Design Systems",
   "Component Libraries",
   "Animation and Motion Design",
-  "Cross-Functional Collaboration",
 ];
 const experiences = [
   {
@@ -218,12 +205,11 @@ export default function Home() {
         />
         <TechStackSection />
         <ProjectsSection projects={projects} />
-
-        {/* <SkillsSection skills={skills} /> */}
+        <SkillsSection skills={skills} />
         <ExperienceSection experiences={experiences} />
         <ContactSection
-          email="abdulatif@email.com"
-          cvLink="/AbdulatifSelemResume.pdf"
+          email="abdlatefkhatib@email.com"
+          cvLink="/public/AbdulatifSelemResume.pdf"
         />
       </div>
     </>
