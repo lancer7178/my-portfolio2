@@ -48,35 +48,29 @@ const projects = [
   {
     title: "Coza Store",
     description:
-      "Coza Store is an online shopping platform designed to provide a seamless, user-friendly experience for customers. With a sleek, modern interface, this app is focused on delivering a fast and secure shopping experience, enabling users to browse, search, and purchase products with ease.",
-    image: "/CozaStore.png", // Place this image in public/
+      "A modern e-commerce platform built with HTML, CSS, and Bootstrap, featuring a sleek interface and smooth user interactions with jQuery. Offers fast browsing, secure checkout, and an intuitive shopping experience for customers.",
+    image: "/CozaStore.png",
     link: "https://lancer7178.github.io/Bdaya-e-commerce/",
     rating: 5,
     technologies: ["html", "css", "bootstrap", "js", "Jquery"],
+    bowmen: false,
   },
   {
     title: "AniWatched",
     description:
-      "AniWatched is a sleek and minimalistic web app designed for anime enthusiasts to track the shows they’ve watched. Built as a personal project, this platform focuses on simplicity, speed, and user-friendliness without the distractions of bloated features.",
-    image: "/Ani.png", // Place this image in public/
+      "A minimalist web application for anime enthusiasts to track watched shows. Built with Tailwind CSS and jQuery, it prioritizes simplicity and speed, providing a distraction-free interface for managing personal anime libraries.",
+    image: "/Ani.png",
     link: "https://lancer7178.github.io/Ani-watched/",
     rating: 5,
-    technologies: [
-      "html",
-      "css",
-      "Tailwind.js",
-      "bootstrap",
-      "Tailwind CSS",
-      "JS",
-      "Jquery",
-    ],
+    technologies: ["html", "css", "Tailwind CSS", "bootstrap", "javaScript", "Jquery"],
+    bowmen: false,
   },
   {
     title: "Dr. Abdel-Moneim's Clinic",
     description:
-      "A compassionate, professional space for individuals seeking mental health support. Designed with ease of access in mind, the site offers comprehensive information about available services, treatment options, and ways to contact the clinic for appointments and consultations.",
-    image: "/Dr.abdelMonem.png", // Place this image in public/
-    link: "https://dr-abdel-moneim.vercel.app/  ",
+      "A professional mental health clinic website providing comprehensive information about services, treatment options, and appointment booking. Built with React and Next.js, featuring smooth animations and bilingual support for accessibility.",
+    image: "/Dr.abdelMonem.png",
+    link: "https://dr-abdel-moneim.vercel.app/",
     rating: 5,
     technologies: [
       "react",
@@ -86,29 +80,14 @@ const projects = [
       "WordPress",
       "REST API",
     ],
-  },
-  {
-    title: "Hayah Ava Healthcare",
-    description:
-      "A modern healthcare website powered by WordPress REST API, featuring dynamic medical products, career opportunities, and a fully responsive, bilingual design with smooth animations and real-time content updates.",
-    image: "/hayah-av.png", // Place this image in public/
-    link: "https://hayah-av.vercel.app/",
-    rating: 5,
-    technologies: [
-      "react",
-      "next.js",
-      "Tailwind CSS",
-      "framer-motion",
-      "WordPress",
-      "REST API",
-    ],
+    bowmen: true,
   },
   {
     title: "Medizen Medical Website",
     description:
-      "A sleek and responsive medical website powered by WordPress REST API, offering real-time content, detailed healthcare services, and bilingual support — all wrapped in a clean, animated user experience.",
-    image: "/medizen.png", // Place this image in public/
-    link: "https://medizen-snowy.vercel.app/",
+      "A responsive medical website powered by WordPress REST API, delivering real-time healthcare services, detailed treatments, and bilingual support. Features smooth animations and a modern design for seamless user engagement.",
+    image: "/medizen.png",
+    link: "https://medizenegypt.com",
     rating: 5,
     technologies: [
       "react",
@@ -118,6 +97,83 @@ const projects = [
       "WordPress",
       "REST API",
     ],
+    bowmen: true,
+  },
+  {
+    title: "Hayah Ava Healthcare",
+    description:
+      "A sleek healthcare platform integrated with WordPress, offering real-time medical services, appointment booking, and comprehensive health information. Built with modern animations and bilingual interface for better accessibility.",
+    image: "/hayah.png",
+    link: "https://hayah-av.vercel.app",
+    rating: 5,
+    technologies: [
+      "react",
+      "next.js",
+      "Tailwind CSS",
+      "framer-motion",
+      "WordPress",
+      "REST API",
+    ],
+    bowmen: true,
+  },
+  {
+    title: "Next Travel",
+    description:
+      "A comprehensive travel platform connecting travelers with beautiful destinations and personalized experiences. Features real-time booking, travel recommendations, and an intuitive interface powered by modern web technologies.",
+    image: "/next.png",
+    link: "https://next-travel-puce.vercel.app",
+    rating: 5,
+    technologies: [
+      "react",
+      "next.js",
+      "Tailwind CSS",
+      "framer-motion",
+      "strapi",
+      "REST API",
+    ],
+    bowmen: true,
+  },
+  {
+    title: "Neuro Bridge",
+    description:
+      "An innovative healthcare platform focusing on neurology and wellness services. Built with modern tech stack, it provides detailed information about neurological treatments, specialist consultations, and patient management.",
+    image: "/neuro.png",
+    link: "https://neuro-bridge-bixz.vercel.app",
+    rating: 5,
+    technologies: [
+      "react",
+      "next.js",
+      "Tailwind CSS",
+      "framer-motion",
+      "firebase",
+    ],
+    bowmen: false,
+  },
+  {
+    title: "Nova Space",
+    description:
+      "An immersive space exploration website featuring stunning 3D visuals and interactive elements. Powered by Three.js, it educates users about universe exploration and astronomy with smooth animations and captivating design.",
+    image: "/nova2.png",
+    link: "https://nova-space-mu.vercel.app",
+    rating: 5,
+    technologies: [
+      "react",
+      "next.js",
+      "Tailwind CSS",
+      "framer-motion",
+      "Three.js",
+    ],
+    bowmen: false,
+  },
+  {
+    title: "Voyage AI",
+    description:
+      "An AI-powered travel planning platform offering personalized itinerary recommendations, real-time travel assistance, and destination insights. Designed with intuitive navigation to revolutionize how travelers explore the world.",
+    image: "/voyageai.png",
+    link: "https://voyage-ai-demo.vercel.app",
+    rating: 5,
+    technologies: ["react", "next.js", "Tailwind CSS", "framer-motion", "huggingface"],
+    bowmen: false,
   },
 ];
 const skills = [
@@ -209,7 +265,7 @@ export default function Home() {
         <ExperienceSection experiences={experiences} />
         <ContactSection
           email="abdlatefkhatib@email.com"
-          cvLink="/public/AbdulatifSelemResume.pdf"
+          cvLink="/public/AbdulatifSelemResume2.pdf"
         />
       </div>
     </>
