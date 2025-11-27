@@ -184,7 +184,7 @@ const projects = [
     description:
       "An AI-powered travel planning platform offering personalized itinerary recommendations, real-time travel assistance, and destination insights. Designed with intuitive navigation to revolutionize how travelers explore the world.",
     image: "/voyageai.png",
-    link: "https://voyage-ai-demo.vercel.app",
+    link: "https://voyage-ai-five.vercel.app",
     rating: 5,
     technologies: ["react", "next.js", "Tailwind CSS", "framer-motion", "huggingface"],
     bowmen: false,
