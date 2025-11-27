@@ -133,6 +133,20 @@ const projects = [
     ],
     bowmen: true,
   },
+   {
+    title: "Renova",
+    description:"Renova Clinic is a Cairo-based plastic surgery center offering advanced aesthetic treatments, including body contouring, facelifts, and scar revision, in a modern medical setting. ",
+    image: "/renova.png",
+    link: "https://dr-amirelboghdady.com",
+    rating: 5,
+    technologies: [
+      "html",
+      "Tailwind CSS",
+      "php",
+      "wordpress",
+    ],
+    bowmen: true,
+  },
   {
     title: "Neuro Bridge",
     description:
