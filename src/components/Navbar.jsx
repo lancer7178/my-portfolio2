@@ -31,15 +31,26 @@ export default function Navbar() {
   const [activeLink, setActiveLink] = useState("Home");
 
   const handleScroll = (href, label) => {
-    const target = document.querySelector(href === "#" ? "body" : href);
-    if (target) {
-      window.scrollTo({
-        top: target.offsetTop - 60,
-        behavior: "smooth",
-      });
-    }
-    setActiveLink(label);
     setIsMenuOpen(false);
+    setActiveLink(label);
+
+    // Add a small delay to allow menu to close first
+    setTimeout(() => {
+      if (href === "#") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+
+      const target = document.querySelector(href);
+      if (target) {
+        const offsetTop =
+          target.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({
+          top: offsetTop,
+          behavior: "smooth",
+        });
+      }
+    }, 100);
   };
 
   return (
