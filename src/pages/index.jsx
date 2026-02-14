@@ -62,7 +62,14 @@ const projects = [
     image: "/Ani.png",
     link: "https://lancer7178.github.io/Ani-watched/",
     rating: 5,
-    technologies: ["html", "css", "Tailwind CSS", "bootstrap", "javaScript", "Jquery"],
+    technologies: [
+      "html",
+      "css",
+      "Tailwind CSS",
+      "bootstrap",
+      "javaScript",
+      "Jquery",
+    ],
     bowmen: false,
   },
   {
@@ -133,18 +140,14 @@ const projects = [
     ],
     bowmen: true,
   },
-   {
+  {
     title: "Renova",
-    description:"Renova Clinic is a Cairo-based plastic surgery center offering advanced aesthetic treatments, including body contouring, facelifts, and scar revision, in a modern medical setting. ",
+    description:
+      "Renova Clinic is a Cairo-based plastic surgery center offering advanced aesthetic treatments, including body contouring, facelifts, and scar revision, in a modern medical setting. ",
     image: "/renova.png",
     link: "https://dr-amirelboghdady.com",
     rating: 5,
-    technologies: [
-      "html",
-      "Tailwind CSS",
-      "php",
-      "wordpress",
-    ],
+    technologies: ["html", "Tailwind CSS", "php", "wordpress"],
     bowmen: true,
   },
   {
@@ -186,7 +189,13 @@ const projects = [
     image: "/voyageai.png",
     link: "https://voyage-ai-five.vercel.app",
     rating: 5,
-    technologies: ["react", "next.js", "Tailwind CSS", "framer-motion", "huggingface"],
+    technologies: [
+      "react",
+      "next.js",
+      "Tailwind CSS",
+      "framer-motion",
+      "huggingface",
+    ],
     bowmen: false,
   },
 ];

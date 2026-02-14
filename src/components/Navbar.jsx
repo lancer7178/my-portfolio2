@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaGithub, FaLinkedin, FaBars, FaTimes } from "react-icons/fa";
 import Image from "next/image";
 
 const navLinks = [
-  { label: "Home", href: "#" },
+  { label: "Home", href: "/" },
   { label: "About", href: "#about" },
   { label: "Projects", href: "#projects" },
   { label: "Skills", href: "#skills" },
@@ -27,8 +28,17 @@ const socialLinks = [
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("Home");
+
+  useEffect(() => {
+    if (pathname === "/ui-ux") {
+      setActiveLink("UI/UX");
+    } else if (pathname === "/") {
+      setActiveLink("Home");
+    }
+  }, [pathname]);
 
   const handleScroll = (href, label) => {
     setIsMenuOpen(false);
@@ -36,6 +46,11 @@ export default function Navbar() {
 
     // Add a small delay to allow menu to close first
     setTimeout(() => {
+      if (href.startsWith("/")) {
+        window.location.href = href;
+        return;
+      }
+
       if (href === "#") {
         window.scrollTo({ top: 0, behavior: "smooth" });
         return;
@@ -65,7 +80,7 @@ export default function Navbar() {
       {/* Animated Border Glow */}
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#6EE7B7]/50 to-transparent" />{" "}
       {/* Content Container */}
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between gap-6">
         {/* Logo / Brand - Desktop */}
         <motion.div
           className="hidden sm:flex items-center group"
@@ -112,12 +127,12 @@ export default function Navbar() {
         </motion.div>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-1 bg-gradient-to-r from-[#0f0f18]/50 to-[#12121f]/40 rounded-full px-2 py-2 border border-[#6EE7B7]/20 backdrop-blur-md shadow-lg shadow-[#6EE7B7]/5 group/nav">
+        <div className="hidden md:flex items-center gap-2 bg-gradient-to-r from-[#0f0f18]/50 to-[#12121f]/40 rounded-full px-3 py-2 border border-[#6EE7B7]/20 backdrop-blur-md shadow-lg shadow-[#6EE7B7]/5 group/nav">
           {navLinks.map((link, index) => (
             <motion.button
               key={link.label}
               onClick={() => handleScroll(link.href, link.label)}
-              className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 group ${
+              className={`relative px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-300 group ${
                 activeLink === link.label
                   ? "text-[#6EE7B7]"
                   : "text-gray-300 hover:text-gray-100"
@@ -144,6 +159,25 @@ export default function Navbar() {
             </motion.button>
           ))}
         </div>
+
+        {/* Standalone UI/UX Button */}
+        <motion.a
+          href="/ui-ux"
+          className="hidden sm:flex items-center px-6 py-3 rounded-full text-sm font-bold text-white bg-gradient-to-r from-[#6EE7B7]/30 via-[#3B82F6]/25 to-[#9333EA]/20 border border-[#6EE7B7]/70 hover:border-[#6EE7B7] hover:bg-gradient-to-r hover:from-[#6EE7B7]/50 hover:via-[#3B82F6]/40 hover:to-[#9333EA]/30 transition-all duration-300 shadow-lg shadow-[#6EE7B7]/30 hover:shadow-[#6EE7B7]/50 group relative overflow-hidden ml-6"
+          whileHover={{ scale: 1.1, y: -4 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          {/* Animated shine effect */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+            initial={{ x: "-100%" }}
+            whileHover={{ x: "100%" }}
+            transition={{ duration: 0.5 }}
+          />
+          <span className="relative z-10 flex items-center gap-2">
+            ✨ Design Section
+          </span>
+        </motion.a>
 
         {/* Desktop Social Icons */}
         <div className="hidden sm:flex items-center gap-3 group/social">
@@ -259,6 +293,31 @@ export default function Navbar() {
 
               {/* Divider */}
               <div className="h-px bg-gradient-to-r from-transparent via-[#6EE7B7]/30 to-transparent my-2" />
+
+              {/* Mobile UI/UX Button */}
+              <motion.a
+                href="/ui-ux"
+                className="relative text-center px-6 py-4 rounded-xl font-semibold bg-gradient-to-r from-[#6EE7B7]/30 via-[#3B82F6]/25 to-[#9333EA]/20 border border-[#6EE7B7]/70 text-white hover:text-white hover:border-[#6EE7B7] hover:bg-gradient-to-r hover:from-[#6EE7B7]/50 hover:via-[#3B82F6]/40 hover:to-[#9333EA]/30 transition-all duration-300 shadow-lg shadow-[#6EE7B7]/30 hover:shadow-[#6EE7B7]/50 group overflow-hidden"
+                initial={{ opacity: 0, x: -25 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                  delay: navLinks.length * 0.1,
+                  duration: 0.4,
+                  type: "spring",
+                }}
+                whileHover={{ x: 2, scale: 1.03 }}
+                whileTap={{ scale: 0.96 }}
+              >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: "100%" }}
+                  transition={{ duration: 0.5 }}
+                />
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  ✨ Design Portfolio
+                </span>
+              </motion.a>
 
               {/* Mobile Social Links */}
               <motion.div
