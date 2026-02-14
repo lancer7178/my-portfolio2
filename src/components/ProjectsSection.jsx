@@ -47,6 +47,9 @@ function ProjectImage({ src, alt, title }) {
 }
 
 export default function ProjectsSection({ projects = [] }) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
   if (!Array.isArray(projects) || projects.length === 0) {
     return (
       <section className="py-24 text-center text-gray-400 bg-[#101014]">
@@ -54,6 +57,11 @@ export default function ProjectsSection({ projects = [] }) {
       </section>
     );
   }
+
+  const totalPages = Math.ceil(projects.length / itemsPerPage);
+  const startIdx = (currentPage - 1) * itemsPerPage;
+  const endIdx = startIdx + itemsPerPage;
+  const displayedProjects = projects.slice(startIdx, endIdx);
 
   return (
     <motion.section
@@ -130,10 +138,9 @@ export default function ProjectsSection({ projects = [] }) {
             experiences.
           </motion.p>
         </motion.div>
-
         {/* Premium Grid */}
         <div className="grid gap-8 md:gap-10 lg:grid-cols-2 xl:grid-cols-3">
-          {projects.map((project, idx) => (
+          {displayedProjects.map((project, idx) => (
             <motion.div
               key={idx}
               className="group relative h-full bg-gradient-to-br from-[#12121f]/80 via-[#14141f]/80 to-[#0f0f18]/80 rounded-2xl border border-[#222230] overflow-hidden shadow-2xl hover:border-[#3B82F6]/60 hover:shadow-2xl hover:bg-gradient-to-br hover:from-[#14141f]/95 hover:via-[#15151f]/95 hover:to-[#0f0f1a]/95 transition-all duration-700 ease-out flex flex-col backdrop-blur-lg"
@@ -179,8 +186,6 @@ export default function ProjectsSection({ projects = [] }) {
                         transition={{ delay: 0.3 }}
                         whileHover={{ scale: 1.05 }}
                       >
-
-                  
                         {/* Text content */}
                         <Image
                           src="/bowmen.png"
@@ -275,6 +280,65 @@ export default function ProjectsSection({ projects = [] }) {
             </motion.div>
           ))}
         </div>
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
+          <motion.div
+            className="mt-16 flex items-center justify-center gap-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+          >
+            <motion.button
+              onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+              disabled={currentPage === 1}
+              className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${
+                currentPage === 1
+                  ? "bg-[#222230] text-gray-500 cursor-not-allowed"
+                  : "bg-gradient-to-r from-[#6EE7B7]/30 to-[#3B82F6]/30 text-[#6EE7B7] hover:from-[#6EE7B7]/50 hover:to-[#3B82F6]/50 border border-[#6EE7B7]/50 hover:border-[#6EE7B7]/70"
+              }`}
+              whileHover={currentPage !== 1 ? { scale: 1.05 } : {}}
+              whileTap={currentPage !== 1 ? { scale: 0.95 } : {}}
+            >
+              ← Previous
+            </motion.button>
+
+            <div className="flex items-center gap-2">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (page) => (
+                  <motion.button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={`w-10 h-10 rounded-full text-sm font-semibold transition-all duration-300 ${
+                      currentPage === page
+                        ? "bg-gradient-to-r from-[#6EE7B7] to-[#3B82F6] text-white shadow-lg shadow-[#6EE7B7]/40"
+                        : "bg-[#222230] text-gray-300 hover:bg-[#2a2a35] hover:text-[#6EE7B7]"
+                    }`}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    {page}
+                  </motion.button>
+                ),
+              )}
+            </div>
+
+            <motion.button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+              }
+              disabled={currentPage === totalPages}
+              className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${
+                currentPage === totalPages
+                  ? "bg-[#222230] text-gray-500 cursor-not-allowed"
+                  : "bg-gradient-to-r from-[#6EE7B7]/30 to-[#3B82F6]/30 text-[#6EE7B7] hover:from-[#6EE7B7]/50 hover:to-[#3B82F6]/50 border border-[#6EE7B7]/50 hover:border-[#6EE7B7]/70"
+              }`}
+              whileHover={currentPage !== totalPages ? { scale: 1.05 } : {}}
+              whileTap={currentPage !== totalPages ? { scale: 0.95 } : {}}
+            >
+              Next →
+            </motion.button>
+          </motion.div>
+        )}{" "}
       </div>
     </motion.section>
   );
