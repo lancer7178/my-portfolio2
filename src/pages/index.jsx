@@ -33,50 +33,8 @@ const aboutApproach = [
   },
 ];
 const projects = [
-  {
-    title: "Coza Store",
-    description:
-      "A modern e-commerce platform built with HTML, CSS, and Bootstrap, featuring a sleek interface and smooth user interactions with jQuery. Offers fast browsing, secure checkout, and an intuitive shopping experience for customers.",
-    image: "/CozaStore.png",
-    link: "https://lancer7178.github.io/Bdaya-e-commerce/",
-    rating: 5,
-    technologies: ["html", "css", "bootstrap", "js", "Jquery"],
-    bowmen: false,
-  },
-  {
-    title: "AniWatched",
-    description:
-      "A minimalist web application for anime enthusiasts to track watched shows. Built with Tailwind CSS and jQuery, it prioritizes simplicity and speed, providing a distraction-free interface for managing personal anime libraries.",
-    image: "/Ani.png",
-    link: "https://lancer7178.github.io/Ani-watched/",
-    rating: 5,
-    technologies: [
-      "html",
-      "css",
-      "Tailwind CSS",
-      "bootstrap",
-      "javaScript",
-      "Jquery",
-    ],
-    bowmen: false,
-  },
-  {
-    title: "Dr. Abdel-Moneim's Clinic",
-    description:
-      "A professional mental health clinic website providing comprehensive information about services, treatment options, and appointment booking. Built with React and Next.js, featuring smooth animations and bilingual support for accessibility.",
-    image: "/Dr.abdelMonem.png",
-    link: "https://dr-abdel-moneim.vercel.app/",
-    rating: 5,
-    technologies: [
-      "react",
-      "next.js",
-      "Tailwind CSS",
-      "framer-motion",
-      "WordPress",
-      "REST API",
-    ],
-    bowmen: true,
-  },
+ 
+
   {
     title: "Medizen Medical Website",
     description:
@@ -129,51 +87,7 @@ const projects = [
     ],
     bowmen: true,
   },
-  {
-    title: "Hayah Ava Healthcare",
-    description:
-      "A sleek healthcare platform integrated with WordPress, offering real-time medical services, appointment booking, and comprehensive health information. Built with modern animations and bilingual interface for better accessibility.",
-    image: "/hayah.png",
-    link: "https://hayah-av.vercel.app",
-    rating: 5,
-    technologies: [
-      "react",
-      "next.js",
-      "Tailwind CSS",
-      "framer-motion",
-      "WordPress",
-      "REST API",
-    ],
-    bowmen: true,
-  },
-  {
-    title: "Next Travel",
-    description:
-      "A comprehensive travel platform connecting travelers with beautiful destinations and personalized experiences. Features real-time booking, travel recommendations, and an intuitive interface powered by modern web technologies.",
-    image: "/next.png",
-    link: "https://next-travel-puce.vercel.app",
-    rating: 5,
-    technologies: [
-      "react",
-      "next.js",
-      "Tailwind CSS",
-      "framer-motion",
-      "strapi",
-      "REST API",
-    ],
-    bowmen: true,
-  },
-  {
-    title: "Renova",
-    description:
-      "Renova Clinic is a Cairo-based plastic surgery center offering advanced aesthetic treatments, including body contouring, facelifts, and scar revision, in a modern medical setting. ",
-    image: "/renova.png",
-    link: "https://dr-amirelboghdady.com",
-    rating: 5,
-    technologies: ["html", "Tailwind CSS", "php", "wordpress"],
-    bowmen: true,
-  },
-  {
+    {
     title: "Neuro Bridge",
     description:
       "An innovative healthcare platform focusing on neurology and wellness services. Built with modern tech stack, it provides detailed information about neurological treatments, specialist consultations, and patient management.",
@@ -218,6 +132,95 @@ const projects = [
       "Tailwind CSS",
       "framer-motion",
       "huggingface",
+    ],
+    bowmen: false,
+  },
+    {
+    title: "Dr. Abdel-Moneim's Clinic",
+    description:
+      "A professional mental health clinic website providing comprehensive information about services, treatment options, and appointment booking. Built with React and Next.js, featuring smooth animations and bilingual support for accessibility.",
+    image: "/Dr.abdelMonem.png",
+    link: "https://dr-abdel-moneim.vercel.app/",
+    rating: 5,
+    technologies: [
+      "react",
+      "next.js",
+      "Tailwind CSS",
+      "framer-motion",
+      "WordPress",
+      "REST API",
+    ],
+    bowmen: true,
+  },
+  {
+    title: "Hayah Ava Healthcare",
+    description:
+      "A sleek healthcare platform integrated with WordPress, offering real-time medical services, appointment booking, and comprehensive health information. Built with modern animations and bilingual interface for better accessibility.",
+    image: "/hayah.png",
+    link: "https://hayah-av.vercel.app",
+    rating: 5,
+    technologies: [
+      "react",
+      "next.js",
+      "Tailwind CSS",
+      "framer-motion",
+      "WordPress",
+      "REST API",
+    ],
+    bowmen: true,
+  },
+  {
+    title: "Next Travel",
+    description:
+      "A comprehensive travel platform connecting travelers with beautiful destinations and personalized experiences. Features real-time booking, travel recommendations, and an intuitive interface powered by modern web technologies.",
+    image: "/next.png",
+    link: "https://next-travel-puce.vercel.app",
+    rating: 5,
+    technologies: [
+      "react",
+      "next.js",
+      "Tailwind CSS",
+      "framer-motion",
+      "strapi",
+      "REST API",
+    ],
+    bowmen: true,
+  },
+  {
+    title: "Renova",
+    description:
+      "Renova Clinic is a Cairo-based plastic surgery center offering advanced aesthetic treatments, including body contouring, facelifts, and scar revision, in a modern medical setting. ",
+    image: "/renova.png",
+    link: "https://dr-amirelboghdady.com",
+    rating: 5,
+    technologies: ["html", "Tailwind CSS", "php", "wordpress"],
+    bowmen: true,
+  },
+
+   {
+    title: "Coza Store",
+    description:
+      "A modern e-commerce platform built with HTML, CSS, and Bootstrap, featuring a sleek interface and smooth user interactions with jQuery. Offers fast browsing, secure checkout, and an intuitive shopping experience for customers.",
+    image: "/CozaStore.png",
+    link: "https://lancer7178.github.io/Bdaya-e-commerce/",
+    rating: 5,
+    technologies: ["html", "css", "bootstrap", "js", "Jquery"],
+    bowmen: false,
+  },
+  {
+    title: "AniWatched",
+    description:
+      "A minimalist web application for anime enthusiasts to track watched shows. Built with Tailwind CSS and jQuery, it prioritizes simplicity and speed, providing a distraction-free interface for managing personal anime libraries.",
+    image: "/Ani.png",
+    link: "https://lancer7178.github.io/Ani-watched/",
+    rating: 5,
+    technologies: [
+      "html",
+      "css",
+      "Tailwind CSS",
+      "bootstrap",
+      "javaScript",
+      "Jquery",
     ],
     bowmen: false,
   },
