@@ -93,7 +93,7 @@ export default function AboutSection({ intro, values, approach }) {
       <div className="relative z-10 max-w-6xl mx-auto">
         <div ref={headerRef} className="mb-20">
           <p className="mono text-xs text-[#22D3EE] tracking-[0.3em] mb-4">
-            // THE PROFILE
+            {"// THE PROFILE"}
           </p>
           <h2 className="text-5xl sm:text-6xl lg:text-7xl font-outfit font-black tracking-tight leading-none">
             <span className="text-white">ABOUT </span>

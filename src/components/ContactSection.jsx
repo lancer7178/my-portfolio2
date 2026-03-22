@@ -97,16 +97,16 @@ export default function ContactSection({
       <div className="relative z-10 max-w-4xl mx-auto">
         <div ref={bigTextRef} className="text-center mb-20">
           <p className="mono text-xs text-[#22D3EE] tracking-[0.3em] mb-6">
-            // GET IN TOUCH
+            {"// GET IN TOUCH"}
           </p>
           <h2 className="text-4xl sm:text-6xl lg:text-8xl font-outfit font-black tracking-tight leading-none">
-            <span className="text-white">LET'S </span>
+            <span className="text-white">LET&apos;S </span>
             <span className="gradient-text">WORK</span>
             <br />
             <span className="text-outline-accent">TOGETHER</span>
           </h2>
           <p className="mt-8 text-[#555570] text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
-            Ready to elevate your brand or start a new project? Let's connect
+            Ready to elevate your brand or start a new project? Let&apos;s connect
             and build something amazing together.
           </p>
         </div>
