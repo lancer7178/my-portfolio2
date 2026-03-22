@@ -5,6 +5,17 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { FaMapMarkerAlt, FaClock, FaBolt, FaArrowRight } from "react-icons/fa";
 
+const particles = [
+  { size: 3, color: "var(--accent-cyan)", top: "12%", left: "8%", dur: "7s", delay: "0s" },
+  { size: 2, color: "var(--accent-indigo)", top: "25%", right: "12%", dur: "5s", delay: "1s" },
+  { size: 4, color: "var(--accent-violet)", top: "60%", left: "15%", dur: "8s", delay: "0.5s" },
+  { size: 2, color: "var(--accent-cyan)", top: "75%", right: "20%", dur: "6s", delay: "2s" },
+  { size: 3, color: "var(--accent-indigo)", top: "40%", left: "85%", dur: "9s", delay: "1.5s" },
+  { size: 2, color: "var(--accent-violet)", top: "18%", left: "45%", dur: "6.5s", delay: "3s" },
+  { size: 3, color: "var(--accent-cyan)", top: "80%", left: "55%", dur: "7.5s", delay: "0.8s" },
+  { size: 2, color: "var(--accent-indigo)", top: "50%", left: "5%", dur: "5.5s", delay: "2.5s" },
+];
+
 export default function HeroSection({
   name = "Abdulatif",
   subtitle = "A passionate Front-End Developer crafting beautiful web experiences.",
@@ -13,7 +24,6 @@ export default function HeroSection({
 }) {
   const sectionRef = useRef(null);
   const nameRef = useRef(null);
-  const outlineRef = useRef(null);
   const contentRef = useRef(null);
   const cardsRef = useRef(null);
   const [currentTime, setCurrentTime] = useState("");
@@ -41,15 +51,16 @@ export default function HeroSection({
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      tl.fromTo(outlineRef.current, { y: 80, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 1.2 });
-      tl.fromTo(nameRef.current, { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1 }, "-=0.8");
+      tl.fromTo(nameRef.current, { y: 60, opacity: 0, scale: 0.95 }, { y: 0, opacity: 1, scale: 1, duration: 1.2 });
       tl.fromTo(contentRef.current?.children || [], { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.15 }, "-=0.5");
       tl.fromTo(cardsRef.current?.children || [], { y: 30, opacity: 0, scale: 0.95 }, { y: 0, opacity: 1, scale: 1, duration: 0.7, stagger: 0.2 }, "-=0.6");
 
-      gsap.to(outlineRef.current, {
-        y: -100,
-        scrollTrigger: { trigger: sectionRef.current, start: "top top", end: "bottom top", scrub: 1 },
-      });
+      // Particles fade in
+      gsap.fromTo(
+        ".particle",
+        { opacity: 0, scale: 0 },
+        { opacity: 1, scale: 1, duration: 1.5, stagger: 0.15, ease: "back.out(1.4)", delay: 0.8 }
+      );
     }, sectionRef);
 
     return () => ctx.revert();
@@ -72,6 +83,24 @@ export default function HeroSection({
       <div className="absolute bottom-[-120px] right-[-120px] w-[500px] h-[500px] bg-[#C084FC] blur-[220px] opacity-[0.05] rounded-full pointer-events-none" />
       <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] bg-[#818CF8] blur-[180px] opacity-[0.06] rounded-full pointer-events-none" />
 
+      {/* Floating Particles */}
+      {particles.map((p, i) => (
+        <span
+          key={i}
+          className="particle"
+          style={{
+            width: p.size,
+            height: p.size,
+            backgroundColor: p.color,
+            top: p.top,
+            left: p.left,
+            right: p.right,
+            "--dur": p.dur,
+            "--delay": p.delay,
+          }}
+        />
+      ))}
+
       {/* Top bar */}
       <div className="absolute top-6 left-6 sm:left-10 flex items-center gap-3">
         <div className="w-10 h-10 bg-[#10101A] border border-[#1A1A2C] rounded-xl flex items-center justify-center">
@@ -82,18 +111,11 @@ export default function HeroSection({
         <span className="mono text-[11px] text-[#555570] tracking-widest">FRONT-END DEVELOPER</span>
       </div>
 
-      {/* Background Outline Name */}
-      <div ref={outlineRef} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none select-none z-0">
-        <h1 className="text-outline font-outfit font-black uppercase leading-none" style={{ fontSize: "clamp(5rem, 18vw, 16rem)" }}>
-          {name}
-        </h1>
-      </div>
-
       {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto mt-12 sm:mt-0">
         <div ref={nameRef}>
           <h2 className="text-5xl sm:text-7xl lg:text-8xl font-outfit font-black tracking-tight leading-none mb-4">
-            <span className="bg-gradient-to-r from-[#22D3EE] via-[#818CF8] to-[#C084FC] bg-clip-text text-transparent">{name}</span>
+            <span className="hero-name cursor-pointer">{name}</span>
           </h2>
           <p className="mono text-xs sm:text-sm text-[#555570] tracking-[0.3em] mb-6">FRONTEND ENGINEER — CREATIVE DEVELOPER</p>
         </div>
@@ -104,7 +126,7 @@ export default function HeroSection({
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <button
               onClick={onButtonClick}
-              className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#22D3EE] via-[#818CF8] to-[#C084FC] text-black font-extrabold font-outfit rounded-full hover:opacity-90 transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-[#818CF8]/20"
+              className="hero-btn group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#22D3EE] via-[#818CF8] to-[#C084FC] text-black font-extrabold font-outfit rounded-full shadow-lg shadow-[#818CF8]/20"
             >
               {buttonText}
               <FaArrowRight className="transition-transform group-hover:translate-x-1" />
@@ -128,7 +150,7 @@ export default function HeroSection({
       {/* Info Cards */}
       <div ref={cardsRef} className="relative z-10 flex flex-col sm:flex-row gap-4 mt-12 sm:mt-16 w-full max-w-4xl px-2">
         {/* Telemetry Card */}
-        <div className="flex-1 glass rounded-2xl p-5">
+        <div className="flex-1 hero-card">
           <div className="flex items-center justify-between mb-4">
             <span className="mono text-[10px] text-[#555570]">TELEMETRY / ACTIVE</span>
             <div className="flex items-center gap-1">
@@ -147,7 +169,7 @@ export default function HeroSection({
         </div>
 
         {/* Tech Specs Card */}
-        <div className="flex-1 glass rounded-2xl p-5">
+        <div className="flex-1 hero-card">
           <div className="flex items-center justify-between mb-4">
             <span className="mono text-[10px] text-[#555570]">TECH SPECS / LOAD</span>
             <FaBolt className="text-[#22D3EE] text-sm" />
