@@ -1,58 +1,99 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { FaStar, FaCode } from "react-icons/fa";
+import { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import Image from "next/image";
+import { FaStar, FaExternalLinkAlt } from "react-icons/fa";
 
-// tiny 1x1 png as data URI fallback so we don't rely on public files
 const FALLBACK_DATA_URI =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=";
 
-function ProjectImage({ src, alt, title }) {
-  const [imgSrc, setImgSrc] = useState(() => {
-    if (!src || src === "/" || typeof src !== "string")
-      return FALLBACK_DATA_URI;
-    return src;
-  });
-  const [isHovered, setIsHovered] = useState(false);
+function ProjectImage({ src, alt }) {
+  const [imgSrc, setImgSrc] = useState(src);
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <div
-      className="overflow-hidden rounded-xl relative"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <Image
-        src={imgSrc}
-        alt={alt || title}
-        width={800}
-        height={224}
-        className="w-full h-72 object-cover object-top group-hover:scale-110 transition-transform duration-800 ease-out"
-        onError={() => setImgSrc(FALLBACK_DATA_URI)}
-        unoptimized={imgSrc?.startsWith("http") || imgSrc?.startsWith("data:")}
-        loading="lazy"
-        priority={false}
-      />
-      {/* Soft overlay effects */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0e]/60 via-transparent to-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-700 ease-out" />
-      {isHovered && (
-        <div
-          className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0"
-          style={{ animation: "softShine 2s ease-in-out infinite" }}
-        />
+    <div className="relative w-full h-full overflow-hidden">
+      {isLoading && (
+        <div className="absolute inset-0 bg-gradient-to-br from-[#10101A] to-[#08080F] animate-pulse" />
       )}
+      <Image
+        src={imgSrc || FALLBACK_DATA_URI}
+        alt={alt || "Project image"}
+        fill
+        sizes="(max-width: 768px) 100vw, 50vw"
+        className="object-cover object-top group-hover:scale-110 transition-transform duration-700 ease-out"
+        onError={() => {
+          setImgSrc(FALLBACK_DATA_URI);
+          setIsLoading(false);
+        }}
+        onLoadingComplete={() => setIsLoading(false)}
+        quality={85}
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#06060A]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
     </div>
   );
 }
 
 export default function ProjectsSection({ projects = [] }) {
+  const sectionRef = useRef(null);
+  const headerRef = useRef(null);
+  const numberRef = useRef(null);
+  const gridRef = useRef(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    gsap.registerPlugin(ScrollTrigger);
+    const ctx = gsap.context(() => {
+      gsap.to(numberRef.current, {
+        y: -80,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1.5,
+        },
+      });
+      gsap.fromTo(
+        headerRef.current,
+        { y: 60, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          scrollTrigger: {
+            trigger: headerRef.current,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+        },
+      );
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
+  useEffect(() => {
+    if (!gridRef.current || typeof window === "undefined") return;
+    gsap.fromTo(
+      gridRef.current.children,
+      { y: 50, opacity: 0, scale: 0.95 },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power3.out",
+      },
+    );
+  }, [currentPage]);
+
   if (!Array.isArray(projects) || projects.length === 0) {
     return (
-      <section className="py-24 text-center text-gray-400 bg-[#101014]">
+      <section className="py-24 text-center text-[#555570] bg-[#06060A]">
         No projects to display.
       </section>
     );
@@ -60,286 +101,156 @@ export default function ProjectsSection({ projects = [] }) {
 
   const totalPages = Math.ceil(projects.length / itemsPerPage);
   const startIdx = (currentPage - 1) * itemsPerPage;
-  const endIdx = startIdx + itemsPerPage;
-  const displayedProjects = projects.slice(startIdx, endIdx);
+  const displayedProjects = projects.slice(startIdx, startIdx + itemsPerPage);
 
   return (
-    <motion.section
+    <section
       id="projects"
-      className="relative min-h-screen w-full py-32 px-6 bg-gradient-to-br from-[#06060a] via-[#0a0a12] to-[#050508] text-white overflow-hidden"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
+      ref={sectionRef}
+      className="relative py-32 px-6 md:px-12 bg-gradient-to-b from-[#06060A] via-[#05050A] to-[#06060A] text-white overflow-hidden"
     >
-      {/* Deep nested background elements */}
       <div
-        className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-[#3B82F6]/15 via-[#3B82F6]/5 to-transparent rounded-full blur-3xl opacity-30"
-        style={{ animation: "pulse 10s ease-in-out infinite" }}
-      />
-      <div
-        className="absolute top-1/3 right-0 w-80 h-80 bg-gradient-to-bl from-[#6EE7B7]/12 via-[#6EE7B7]/4 to-transparent rounded-full blur-3xl opacity-25"
-        style={{ animation: "pulse 12s ease-in-out infinite" }}
-      />
-      <div
-        className="absolute bottom-0 left-1/2 w-96 h-96 bg-gradient-to-t from-[#9333EA]/10 via-[#9333EA]/3 to-transparent rounded-full blur-3xl opacity-20"
-        style={{ animation: "pulse 14s ease-in-out infinite" }}
-      />
-      {/* Additional deep accent layers */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f]/80 via-transparent to-transparent pointer-events-none" />
+        ref={numberRef}
+        className="section-number top-10 right-0 sm:right-10 opacity-100"
+        style={{ WebkitTextStroke: "1px rgba(34, 211, 238, 0.04)" }}
+      >
+        04
+      </div>
 
       <div className="relative z-10 max-w-7xl mx-auto">
-        {/* Premium Section Header */}
-        <motion.div
-          className="text-center mb-32 space-y-8"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-        >
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.2 }}
-          >
-            <span className="inline-block px-4 py-2 text-sm font-bold text-[#6EE7B7] bg-gradient-to-r from-[#6EE7B7]/12 via-[#3B82F6]/8 to-[#6EE7B7]/6 border border-[#6EE7B7]/35 rounded-full backdrop-blur-xl shadow-lg hover:shadow-xl hover:shadow-[#6EE7B7]/15 hover:bg-gradient-to-r hover:from-[#6EE7B7]/18 hover:via-[#3B82F6]/12 hover:to-[#6EE7B7]/10 transition-all duration-400">
-              ✨ Portfolio Showcase
-            </span>
-          </motion.div>
-
-          <motion.h2
-            className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight mb-8 leading-tight"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
-            <span className="bg-gradient-to-r from-[#6EE7B7] via-[#3B82F6] to-[#9333EA] bg-clip-text text-transparent drop-shadow-lg">
-              Featured Projects
-            </span>
-          </motion.h2>
-
-          <motion.div
-            className="flex gap-3 justify-center mb-8"
-            initial={{ opacity: 0, scaleX: 0 }}
-            animate={{ opacity: 1, scaleX: 1 }}
-            transition={{ delay: 0.4 }}
-          >
-            <div className="h-1.5 w-20 bg-gradient-to-r from-[#6EE7B7]/90 via-[#6EE7B7]/70 to-[#3B82F6]/80 rounded-full shadow-lg shadow-[#6EE7B7]/40" />
-            <div className="h-1.5 w-10 bg-gradient-to-r from-[#3B82F6]/85 via-[#3B82F6]/65 to-[#9333EA]/75 rounded-full shadow-lg shadow-[#3B82F6]/35" />
-            <div className="h-1.5 w-6 bg-gradient-to-r from-[#9333EA]/80 via-[#9333EA]/60 to-[#6EE7B7]/70 rounded-full shadow-lg shadow-[#9333EA]/30" />
-          </motion.div>
-
-          <motion.p
-            className="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed font-light"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-          >
+        <div ref={headerRef} className="mb-20">
+          <p className="mono text-xs text-[#22D3EE] tracking-[0.3em] mb-4">{`// PORTFOLIO`}</p>
+          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-outfit font-black tracking-tight leading-none">
+            <span className="text-white italic">SELECTED </span>
+            <span className="text-outline-accent italic">WORKS</span>
+          </h2>
+          <div className="flex gap-2 mt-6">
+            <div className="h-1 w-16 bg-gradient-to-r from-[#22D3EE] to-[#818CF8] rounded-full" />
+            <div className="h-1 w-8 bg-[#818CF8]/50 rounded-full" />
+            <div className="h-1 w-4 bg-[#C084FC]/40 rounded-full" />
+          </div>
+          <p className="mt-6 text-[#555570] max-w-2xl text-base leading-relaxed">
             Explore a curated collection of innovative projects showcasing
             cutting-edge web technologies, creative design, and seamless user
             experiences.
-          </motion.p>
-        </motion.div>
-        {/* Premium Grid */}
-        <div className="grid gap-8 md:gap-10 lg:grid-cols-2 xl:grid-cols-3">
-          {displayedProjects.map((project, idx) => (
-            <motion.div
-              key={idx}
-              className="group relative h-full bg-gradient-to-br from-[#12121f]/80 via-[#14141f]/80 to-[#0f0f18]/80 rounded-2xl border border-[#222230] overflow-hidden shadow-2xl hover:border-[#3B82F6]/60 hover:shadow-2xl hover:bg-gradient-to-br hover:from-[#14141f]/95 hover:via-[#15151f]/95 hover:to-[#0f0f1a]/95 transition-all duration-700 ease-out flex flex-col backdrop-blur-lg"
-              initial={{ opacity: 0, y: 50, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{
-                delay: idx * 0.1,
-                duration: 0.7,
-                type: "spring",
-                stiffness: 80,
-              }}
-              whileHover={{
-                y: -10,
-                boxShadow: "0 30px 60px rgba(59, 130, 246, 0.2)",
-              }}
-            >
-              {/* Bright nested gradient overlay on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#6EE7B7]/8 via-[#3B82F6]/5 to-[#9333EA]/6 opacity-0 group-hover:opacity-100 transition-opacity duration-600 ease-out pointer-events-none z-10" />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#3B82F6]/5 to-[#000000]/30 opacity-0 group-hover:opacity-100 transition-opacity duration-600 ease-out pointer-events-none z-9" />
+          </p>
+        </div>
 
-              {/* Image Container */}
-              <div className="relative w-full h-64 overflow-hidden bg-gradient-to-br from-[#131320] via-[#15151f] to-[#0f0f18] group-hover:from-[#1a1a28] group-hover:via-[#1a1a2a] group-hover:to-[#141420] transition-all duration-700 ease-out">
-                <ProjectImage
-                  src={project.image}
-                  alt={project.title}
-                  title={project.title}
-                />
+        <div
+          ref={gridRef}
+          className="grid gap-4 sm:gap-8 md:grid-cols-2 xl:grid-cols-3"
+        >
+          {displayedProjects.map((project, idx) => (
+            <div
+              key={`${project.title}-${currentPage}`}
+              className="group relative flex flex-col rounded-2xl bg-[#10101A]/80 border border-[#1A1A2C] overflow-hidden hover:border-[#22D3EE]/25 transition-all duration-500 backdrop-blur-sm"
+            >
+              <div className="relative w-full h-56 overflow-hidden">
+                <ProjectImage src={project.image} alt={project.title} />
+                <div className="absolute top-3 left-3 mono text-[10px] text-white/30 bg-black/40 px-2 py-1 rounded-md backdrop-blur-sm">
+                  #{String(startIdx + idx + 1).padStart(2, "0")}
+                </div>
+                {project.bowmen && (
+                  <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#FF6B9D]/10 border border-[#FF6B9D]/25 backdrop-blur-sm">
+                    <Image
+                      src="/bowmen.png"
+                      alt="Bowmen"
+                      width={12}
+                      height={12}
+                      className="object-contain"
+                    />
+                    <span className="mono text-[9px] text-[#FF6B9D]">
+                      BOWMEN
+                    </span>
+                  </div>
+                )}
               </div>
 
-              {/* Content Section */}
-              <div className="flex-1 flex flex-col p-7 sm:p-8 gap-5">
-                {/* Title */}
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3 flex-wrap">
-                    <h3 className="text-lg sm:text-xl lg:text-xl font-bold text-gray-100 line-clamp-2 group-hover:text-[#6EE7B7] transition-colors duration-500 ease-out">
-                      {project.title || "Untitled Project"}
-                    </h3>
-                    {project.bowmen && (
-                      <motion.span
-                        className="inline-flex items-center px-3 gap-1.5 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-[#FF6B9D]/20 to-[#C44569]/15 border border-[#FF6B9D]/40 text-[#FF6B9D] whitespace-nowrap"
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.3 }}
-                        whileHover={{ scale: 1.05 }}
-                      >
-                        {/* Text content */}
-                        <Image
-                          src="/bowmen.png"
-                          alt="Bowmen"
-                          width={16}
-                          height={16}
-                          className="object-contain"
-                        />
-                        <span className="relative z-10">Bowmen marketing</span>
-                      </motion.span>
-                    )}
-                  </div>
-                  <motion.div
-                    className="h-0.5 w-10 bg-gradient-to-r from-[#6EE7B7]/70 via-[#3B82F6]/60 to-[#9333EA]/50 rounded-full opacity-60 group-hover:opacity-100 group-hover:from-[#6EE7B7]/100 group-hover:via-[#3B82F6]/90 group-hover:to-[#9333EA]/85"
-                    initial={{ width: 40 }}
-                    whileHover={{ width: 70 }}
-                    transition={{ duration: 0.4 }}
-                  />
+              <div className="flex-1 flex flex-col p-6 gap-4">
+                <div>
+                  <h3 className="text-lg font-bold font-outfit text-[#EAEAEF] group-hover:text-[#22D3EE] transition-colors duration-300 mb-2">
+                    {project.title || "Untitled Project"}
+                  </h3>
+                  <div className="h-0.5 w-8 bg-gradient-to-r from-[#22D3EE]/50 to-[#818CF8]/30 rounded-full group-hover:w-14 transition-all duration-500" />
                 </div>
 
-                {/* Description */}
-                <p className="text-sm text-gray-500 leading-relaxed line-clamp-3 flex-grow">
-                  {project.description ||
-                    "A remarkable project showcasing innovative design and technology."}
+                <p className="text-sm text-[#555570] leading-relaxed line-clamp-3 flex-grow">
+                  {project.description}
                 </p>
 
-                {/* Rating */}
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-0.5">
-                    {[...Array(5)].map((_, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 0.3 + i * 0.05 }}
-                      >
-                        <FaStar
-                          className={`transition-all duration-400 ${
-                            i < (project.rating || 5)
-                              ? "text-[#6EE7B7] drop-shadow-sm drop-shadow-[#6EE7B7]/30"
-                              : "text-gray-700"
-                          }`}
-                          size={15}
-                        />
-                      </motion.div>
-                    ))}
-                  </div>
-                  <span className="text-xs font-semibold text-gray-400">
+                <div className="flex items-center gap-1.5">
+                  {[...Array(5)].map((_, i) => (
+                    <FaStar
+                      key={i}
+                      className={`text-xs ${i < (project.rating || 5) ? "text-[#22D3EE]" : "text-[#1A1A2C]"}`}
+                    />
+                  ))}
+                  <span className="mono text-[10px] text-[#555570] ml-1">
                     {project.rating || 5}.0
                   </span>
                 </div>
 
-                {/* Technologies */}
                 {project.technologies?.length > 0 && (
-                  <motion.div
-                    className="flex flex-wrap gap-2 pt-4 border-t border-[#1a1a26]"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.3 }}
-                  >
+                  <div className="flex flex-wrap gap-1.5 pt-3 border-t border-[#1A1A2C]">
                     {project.technologies.slice(0, 4).map((tech, i) => (
-                      <motion.span
+                      <span
                         key={`${tech}-${i}`}
-                        className="px-3 py-1 text-xs font-semibold text-[#6EE7B7] bg-gradient-to-r from-[#6EE7B7]/6 to-[#3B82F6]/4 border border-[#6EE7B7]/20 rounded-md hover:bg-gradient-to-r hover:from-[#6EE7B7]/12 hover:to-[#3B82F6]/8 hover:border-[#6EE7B7]/35 transition-all duration-500 ease-out"
-                        whileHover={{ scale: 1.05, y: -1 }}
+                        className="px-2.5 py-1 text-[10px] mono text-[#22D3EE] bg-[#22D3EE]/5 border border-[#22D3EE]/12 rounded-md"
                       >
                         {tech}
-                      </motion.span>
+                      </span>
                     ))}
-                    {project.technologies?.length > 4 && (
-                      <span className="px-3 py-1 text-xs font-semibold text-gray-600 bg-gradient-to-r from-[#0d0d15] to-[#0f0f18] border border-[#1a1a26] rounded-md">
+                    {project.technologies.length > 4 && (
+                      <span className="px-2.5 py-1 text-[10px] mono text-[#555570] bg-[#10101A] border border-[#1A1A2C] rounded-md">
                         +{project.technologies.length - 4}
                       </span>
                     )}
-                  </motion.div>
+                  </div>
                 )}
 
-                {/* Call-to-Action Button */}
                 {project.link && (
-                  <motion.a
+                  <a
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-4 px-6 py-3 rounded-lg font-semibold text-sm text-white bg-gradient-to-r from-[#6EE7B7]/90 via-[#3B82F6]/85 to-[#9333EA]/80 shadow-lg shadow-[#3B82F6]/25 hover:shadow-xl hover:shadow-[#6EE7B7]/40 hover:from-[#6EE7B7] hover:via-[#3B82F6] hover:to-[#9333EA] transition-all duration-500 ease-out inline-block w-full text-center"
-                    whileHover={{ scale: 1.02, y: -2 }}
-                    whileTap={{ scale: 0.98 }}
+                    className="mt-2 flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-[#22D3EE]/90 via-[#818CF8]/85 to-[#C084FC]/80 hover:from-[#22D3EE] hover:via-[#818CF8] hover:to-[#C084FC] transition-all duration-300 shadow-lg shadow-[#818CF8]/12 hover:shadow-[#818CF8]/25 hover:scale-[1.02] active:scale-[0.98]"
                   >
-                    View Project
-                  </motion.a>
+                    View Project <FaExternalLinkAlt className="text-xs" />
+                  </a>
                 )}
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
-        {/* Pagination Controls */}
+
         {totalPages > 1 && (
-          <motion.div
-            className="mt-16 flex items-center justify-center gap-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-          >
-            <motion.button
-              onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+          <div className="mt-12 sm:mt-16 flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}
-              className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${
-                currentPage === 1
-                  ? "bg-[#222230] text-gray-500 cursor-not-allowed"
-                  : "bg-gradient-to-r from-[#6EE7B7]/30 to-[#3B82F6]/30 text-[#6EE7B7] hover:from-[#6EE7B7]/50 hover:to-[#3B82F6]/50 border border-[#6EE7B7]/50 hover:border-[#6EE7B7]/70"
-              }`}
-              whileHover={currentPage !== 1 ? { scale: 1.05 } : {}}
-              whileTap={currentPage !== 1 ? { scale: 0.95 } : {}}
+              className={`px-5 py-2.5 rounded-full mono text-xs transition-all duration-300 ${currentPage === 1 ? "bg-[#10101A] text-[#555570] cursor-not-allowed" : "bg-[#10101A] text-[#22D3EE] border border-[#22D3EE]/25 hover:border-[#22D3EE]/50 hover:scale-105"}`}
             >
-              ← Previous
-            </motion.button>
-
-            <div className="flex items-center gap-2">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                (page) => (
-                  <motion.button
-                    key={page}
-                    onClick={() => setCurrentPage(page)}
-                    className={`w-10 h-10 rounded-full text-sm font-semibold transition-all duration-300 ${
-                      currentPage === page
-                        ? "bg-gradient-to-r from-[#6EE7B7] to-[#3B82F6] text-white shadow-lg shadow-[#6EE7B7]/40"
-                        : "bg-[#222230] text-gray-300 hover:bg-[#2a2a35] hover:text-[#6EE7B7]"
-                    }`}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    {page}
-                  </motion.button>
-                ),
-              )}
-            </div>
-
-            <motion.button
-              onClick={() =>
-                setCurrentPage((prev) => Math.min(totalPages, prev + 1))
-              }
+              ← PREV
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={`w-10 h-10 rounded-full text-sm font-bold transition-all duration-300 ${currentPage === page ? "bg-gradient-to-r from-[#22D3EE] via-[#818CF8] to-[#C084FC] text-white shadow-lg shadow-[#818CF8]/25" : "bg-[#10101A] text-[#555570] hover:text-[#22D3EE] hover:bg-[#1A1A2C]"}`}
+              >
+                {page}
+              </button>
+            ))}
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages}
-              className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${
-                currentPage === totalPages
-                  ? "bg-[#222230] text-gray-500 cursor-not-allowed"
-                  : "bg-gradient-to-r from-[#6EE7B7]/30 to-[#3B82F6]/30 text-[#6EE7B7] hover:from-[#6EE7B7]/50 hover:to-[#3B82F6]/50 border border-[#6EE7B7]/50 hover:border-[#6EE7B7]/70"
-              }`}
-              whileHover={currentPage !== totalPages ? { scale: 1.05 } : {}}
-              whileTap={currentPage !== totalPages ? { scale: 0.95 } : {}}
+              className={`px-5 py-2.5 rounded-full mono text-xs transition-all duration-300 ${currentPage === totalPages ? "bg-[#10101A] text-[#555570] cursor-not-allowed" : "bg-[#10101A] text-[#22D3EE] border border-[#22D3EE]/25 hover:border-[#22D3EE]/50 hover:scale-105"}`}
             >
-              Next →
-            </motion.button>
-          </motion.div>
-        )}{" "}
+              NEXT →
+            </button>
+          </div>
+        )}
       </div>
-    </motion.section>
+    </section>
   );
 }

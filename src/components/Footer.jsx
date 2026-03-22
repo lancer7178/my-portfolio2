@@ -1,40 +1,24 @@
-import { motion } from "framer-motion";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaHeart } from "react-icons/fa";
 
 export default function Footer({ year, name }) {
   return (
-    <motion.footer
-      className="relative w-full text-center py-10 bg-[#101014] text-sm text-gray-400 flex flex-col items-center space-y-4 overflow-hidden"
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, type: "spring" }}
-    >
-      {/* Social Links */}
-      <div className="flex items-center gap-6 text-xl">
-        <a
-          href="https://github.com/lancer7178"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="transition-transform hover:scale-110 hover:text-white"
-          aria-label="GitHub"
-        >
-          <FaGithub />
+    <footer className="relative w-full py-12 pb-28 bg-[#05050A] text-center overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#22D3EE]/15 to-transparent" />
+
+      <div className="flex items-center justify-center gap-4 mb-6">
+        <a href="https://github.com/lancer7178" target="_blank" rel="noopener noreferrer"
+          className="p-3 rounded-full bg-[#10101A] border border-[#1A1A2C] text-[#555570] hover:text-[#22D3EE] hover:border-[#22D3EE]/25 transition-all duration-300 hover:scale-110" aria-label="GitHub">
+          <FaGithub className="text-lg" />
         </a>
-        <a
-          href="https://linkedin.com/in/abdul-atif-selem-8521a7281"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="transition-transform hover:scale-110 hover:text-white"
-          aria-label="LinkedIn"
-        >
-          <FaLinkedin />
+        <a href="https://linkedin.com/in/abdul-atif-selem-8521a7281" target="_blank" rel="noopener noreferrer"
+          className="p-3 rounded-full bg-[#10101A] border border-[#1A1A2C] text-[#555570] hover:text-[#818CF8] hover:border-[#818CF8]/25 transition-all duration-300 hover:scale-110" aria-label="LinkedIn">
+          <FaLinkedin className="text-lg" />
         </a>
       </div>
 
-      {/* Copyright */}
-      <div className="text-xs sm:text-sm text-gray-500">
-        © {year} {name} — All rights reserved.
-      </div>
-    </motion.footer>
+      <p className="text-xs text-[#555570] mono flex items-center justify-center gap-1.5">
+        © {year} {name} — Made with <FaHeart className="text-[#22D3EE] text-[10px]" /> All rights reserved.
+      </p>
+    </footer>
   );
 }

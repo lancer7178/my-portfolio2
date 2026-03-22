@@ -1,59 +1,230 @@
-import { motion } from "framer-motion";
+"use client";
 
-export default function SkillsSection({ skills }) {
-  return (
-    <motion.section
-      id="skills"
-      className="py-24 px-4 sm:px-8 lg:px-16"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-      variants={{
-        hidden: { opacity: 0, y: 40 },
-        visible: {
-          opacity: 1,
-          y: 0,
-          transition: { duration: 0.8, type: "spring", staggerChildren: 0.05 },
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+
+const skillCategories = [
+  {
+    label: "FRONTEND / CORE",
+    skills: [
+      { name: "React", level: 95 },
+      { name: "Next.js", level: 92 },
+      { name: "React Native", level: 85 },
+      { name: "JavaScript", level: 90 },
+      { name: "TypeScript", level: 80 },
+    ],
+  },
+  {
+    label: "STYLING / DESIGN",
+    skills: [
+      { name: "Tailwind CSS", level: 95 },
+      { name: "CSS / SCSS", level: 92 },
+      { name: "Figma", level: 85 },
+      { name: "UI/UX Design", level: 88 },
+    ],
+  },
+  {
+    label: "TOOLS / OTHER",
+    skills: [
+      { name: "Git / GitHub", level: 90 },
+      { name: "WordPress", level: 85 },
+      { name: "RESTful APIs", level: 88 },
+      { name: "Framer Motion", level: 82 },
+    ],
+  },
+];
+
+export default function SkillsSection() {
+  const sectionRef = useRef(null);
+  const headerRef = useRef(null);
+  const numberRef = useRef(null);
+  const gridRef = useRef(null);
+  const barsRef = useRef([]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      gsap.to(numberRef.current, {
+        y: -60,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1.5,
         },
-      }}
+      });
+      gsap.fromTo(
+        headerRef.current,
+        { y: 60, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          scrollTrigger: {
+            trigger: headerRef.current,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+        },
+      );
+      gsap.fromTo(
+        gridRef.current?.children || [],
+        { y: 50, opacity: 0, scale: 0.95 },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 0.7,
+          stagger: 0.15,
+          scrollTrigger: {
+            trigger: gridRef.current,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        },
+      );
+
+      barsRef.current.forEach((bar) => {
+        if (!bar) return;
+        const target = bar.dataset.level;
+        gsap.fromTo(
+          bar,
+          { width: "0%" },
+          {
+            width: `${target}%`,
+            duration: 1.2,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: bar,
+              start: "top 90%",
+              toggleActions: "play none none none",
+            },
+          },
+        );
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section
+      id="skills"
+      ref={sectionRef}
+      className="relative py-32 px-6 md:px-12 bg-gradient-to-b from-[#06060A] via-[#08080F] to-[#06060A] text-white overflow-hidden"
     >
-      {/* Section Header */}
-      <motion.div
-        className="text-center mb-16"
-        initial={{ opacity: 0, x: -50 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.7, type: "spring" }}
+      <div
+        ref={numberRef}
+        className="section-number top-10 right-0 sm:right-10 opacity-100"
+        style={{ WebkitTextStroke: "1px rgba(129, 140, 248, 0.04)" }}
       >
-        <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-[#6EE7B7] via-[#3B82F6] to-[#9333EA] bg-clip-text text-transparent mb-4">
-          My Skillset
-        </h2>
-        <div className="w-24 h-1 bg-[#6EE7B7] mx-auto rounded-full" />
-      </motion.div>
-
-      {/* Optional Description */}
-      <motion.p
-        className="text-lg text-gray-300 leading-relaxed max-w-2xl mx-auto text-center mb-10"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        A refined collection of technologies and tools I master to craft modern,
-        high-quality user experiences.
-      </motion.p>
-
-      {/* Skills Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
-        {skills.map((skill, idx) => (
-          <motion.div
-            key={idx}
-            className="rounded-xl bg-[#18181b] hover:bg-[#1b1b29] transition-colors shadow-md px-6 py-4 text-center text-gray-100 font-semibold text-base sm:text-lg hover:shadow-lg hover:scale-105 duration-300"
-            whileHover={{ scale: 1.06 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
-            {skill}
-          </motion.div>
-        ))}
+        02
       </div>
-    </motion.section>
+
+      <div className="relative z-10 max-w-6xl mx-auto">
+        <div ref={headerRef} className="mb-20">
+          <p className="mono text-xs text-[#22D3EE] tracking-[0.3em] mb-4">
+            // TECH STACK
+          </p>
+          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-outfit font-black tracking-tight leading-none">
+            <span className="text-white">SKILL </span>
+            <span className="text-outline-accent">SET</span>
+          </h2>
+          <div className="flex gap-2 mt-6">
+            <div className="h-1 w-16 bg-gradient-to-r from-[#22D3EE] to-[#818CF8] rounded-full" />
+            <div className="h-1 w-8 bg-[#818CF8]/50 rounded-full" />
+            <div className="h-1 w-4 bg-[#C084FC]/40 rounded-full" />
+          </div>
+        </div>
+
+        <div
+          ref={gridRef}
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
+        >
+          {skillCategories.map((category, catIdx) => (
+            <div
+              key={catIdx}
+              className="group p-4 sm:p-6 rounded-2xl bg-[#10101A]/70 border border-[#1A1A2C] hover:border-[#22D3EE]/25 transition-all duration-500 backdrop-blur-sm"
+            >
+              <div className="flex items-center justify-between mb-6">
+                <span className="mono text-[10px] text-[#555570]">
+                  {category.label}
+                </span>
+                <span className="mono text-[10px] text-[#22D3EE]">
+                  CAPACITY
+                </span>
+              </div>
+              <div className="space-y-5">
+                {category.skills.map((skill, skillIdx) => {
+                  const globalIdx = catIdx * 5 + skillIdx;
+                  return (
+                    <div key={skillIdx}>
+                      <div className="flex justify-between mono text-xs mb-2">
+                        <span className="text-[#EAEAEF] font-medium">
+                          {skill.name}
+                        </span>
+                        <span className="text-[#555570]">{skill.level}%</span>
+                      </div>
+                      <div className="capacity-bar">
+                        <div
+                          ref={(el) => (barsRef.current[globalIdx] = el)}
+                          data-level={skill.level}
+                          className="capacity-fill"
+                          style={{ width: 0 }}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-12 flex flex-wrap gap-3 justify-center">
+          {[
+            "HTML",
+            "CSS",
+            "SCSS",
+            "Bootstrap",
+            "jQuery",
+            "JavaScript",
+            "TypeScript",
+            "React",
+            "React Native",
+            "Next.js",
+            "Tailwind CSS",
+            "Framer Motion",
+            "GSAP",
+            "Three.js",
+            "WordPress",
+            "PHP",
+            "MySQL",
+            "Firebase",
+            "Strapi",
+            "REST APIs",
+            "Git / GitHub",
+            "Figma",
+            "C++",
+            "Responsive Design",
+            "SEO",
+            "UI/UX Design",
+            "Problem Solving",
+            "Animation & Motion",
+            "Component Libraries",
+          ].map((skill, idx) => (
+            <span
+              key={idx}
+              className="px-4 py-2 text-xs mono text-[#8888A0] bg-[#10101A]/50 border border-[#1A1A2C] rounded-full hover:border-[#22D3EE]/30 hover:text-[#22D3EE] transition-all duration-300 cursor-default"
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

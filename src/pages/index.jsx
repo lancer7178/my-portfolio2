@@ -1,23 +1,11 @@
-import localFont from "next/font/local";
 import HeroSection from "../components/HeroSection";
 import AboutSection from "../components/AboutSection";
 import ProjectsSection from "../components/ProjectsSection";
 import ContactSection from "../components/ContactSection";
-import TechStackSection from "../components/TechStackSection";
 import ExperienceSection from "../components/ExperienceSection";
 import SkillsSection from "@/components/SkillsSection";
+import UiUxFigmaSection from "../components/UiUxFigmaSection";
 import Head from "next/head";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
 
 const aboutIntro =
   "I prioritize client collaboration, fostering open communication. I'm very flexible with time zone communications and constantly try to improve. Tech enthusiast with a passion for development.";
@@ -103,6 +91,41 @@ const projects = [
       "framer-motion",
       "WordPress",
       "REST API",
+    ],
+    bowmen: true,
+  },
+  {
+    title: "Bowmen plus",
+    description:
+      "A cutting-edge headless WordPress application. Built with React and Next.js, it merges sophisticated animations with a utility-first design to redefine modern web browsing.",
+    image: "/bowmenplus.png",
+    link: "https://bowmenplus.com",
+    rating: 5,
+    technologies: [
+      "react",
+      "next.js",
+      "Tailwind CSS",
+      "framer-motion",
+      "WordPress",
+      "REST API",
+    ],
+    bowmen: true,
+  },
+  {
+    title: "Underground Heritage",
+    description:
+      "A premium headless e-commerce experience designed to showcase cultural and heritage-inspired products with a focus on high-performance retail and immersive storytelling.",
+    image: "/underground-heritage.png",
+    link: "https://undergroun-heritage-e-commerce-s.vercel.app/",
+    rating: 5,
+    technologies: [
+      "Next.js",
+      "React",
+      "Tailwind CSS",
+      "TypeScript",
+      "WooCommerce REST API",
+      "Framer Motion",
+      "Stripe",
     ],
     bowmen: true,
   },
@@ -199,32 +222,57 @@ const projects = [
     bowmen: false,
   },
 ];
-const skills = [
-  "HTML",
-  "CSS",
-  "Tailwind CSS",
-  "Bootstrap",
-  "JavaScript",
-  "jQuery",
-  "TypeScript",
-  "React",
-  "Next.js",
-  "Git",
-  "GitHub",
-  "RESTful APIs",
-  "WordPress",
-  "C++",
-  "MySQL",
-  "Figma",
-  "UI/UX Design",
-  "Responsive Design",
-  "Problem Solving",
-  "SEO Basics",
-  "Continuous Learning",
-  "Creative Thinking",
-  "Component Libraries",
-  "Animation and Motion Design",
+const figmaProjects = [
+  {
+    title: "Ventura",
+    type: "Figma Design Project",
+    description:
+      "A complete UI/UX design crafted in Figma with a clean visual direction, structured layout system, and polished user flow.",
+    image: "/ventura.png",
+    link: "https://www.figma.com/design/bPLCosPrx27QunpXHMB6VL/Ventura?node-id=0-1&t=rOnJ6MV8Rl3gRSAl-1",
+    embedUrl:
+      "https://embed.figma.com/design/bPLCosPrx27QunpXHMB6VL/Ventura?node-id=0-1&embed-host=share",
+  },
+  {
+    title: "SocialGram",
+    type: "Social App UI",
+    description:
+      "A social media app interface designed in Figma, focused on clean content feeds, profile interactions, and intuitive mobile navigation.",
+    image: "/socialgram.png",
+    link: "https://www.figma.com/design/o0OAb1LyQMwpeiNvmdqe6I/SocialGram?node-id=0-1",
+    embedUrl:
+      "https://embed.figma.com/design/o0OAb1LyQMwpeiNvmdqe6I/SocialGram?node-id=0-1&embed-host=share",
+  },
+  {
+    title: "Untitled-UI",
+    type: "UI Design System",
+    description:
+      "A comprehensive UI design system with reusable components, typography scales, and color tokens for consistent design implementation across projects.",
+    image: "/untitled.png",
+    link: "https://www.figma.com/design/1awMsXZ0PImopkseWDuttI/Untitled-UI?node-id=0-1",
+    embedUrl:
+      "https://embed.figma.com/design/1awMsXZ0PImopkseWDuttI/Untitled-UI?node-id=0-1&embed-host=share",
+  },
 ];
+
+const figmaExperience = [
+  {
+    title: "Research & User Flow",
+    description:
+      "I map user journeys and key actions first, then translate goals into clear page structures that reduce friction and improve navigation.",
+  },
+  {
+    title: "Wireframing & Prototyping",
+    description:
+      "I build low and high-fidelity wireframes in Figma, then create interactive prototypes to validate layout, spacing, and interaction patterns.",
+  },
+  {
+    title: "UI Systems & Handoff",
+    description:
+      "I organize reusable components, typography scales, and spacing rules to make developer handoff smooth and keep designs consistent.",
+  },
+];
+
 const experiences = [
   {
     title: "Frontend Engineer Intern",
@@ -242,7 +290,7 @@ const experiences = [
     title: "Idea Generation & Creativity",
     role: "Creative Contributor",
     description:
-      "I played an active role in brainstorming sessions, where I generated innovative ideas and conceptualized creative solutions for projects. Whether it was for e-commerce platforms or mental health clinics, I ensured that every design and feature aligned with the client’s vision.",
+      "I played an active role in brainstorming sessions, where I generated innovative ideas and conceptualized creative solutions for projects. Whether it was for e-commerce platforms or mental health clinics, I ensured that every design and feature aligned with the client's vision.",
   },
   {
     title: "GitHub & Git",
@@ -256,22 +304,23 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>My Portfolio</title>
+        <title>Abdulatif | Front-End Developer Portfolio</title>
+        <meta
+          name="description"
+          content="Front-End Developer specializing in React, Next.js, and modern web technologies. Building beautiful, high-performance web experiences."
+        />
       </Head>
 
-      <div
-        className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-[#101014] text-white font-[family-name:var(--font-geist-sans)] transition-colors duration-500 pt-16`}
-      >
+      <div className="min-h-screen bg-[#06060A] text-white font-outfit">
         <HeroSection
           name="Abdulatif"
-          subtitle="A passionate Front-End Developer crafting beautiful web experiences."
-          logoSrc="/logo.svg"
-          buttonText="Show my work"
+          subtitle="A passionate Front-End Developer crafting beautiful web experiences with clean code and modern design."
+          buttonText="START ENGINE"
           onButtonClick={() => {
             const target = document.querySelector("#projects");
             if (target) {
               window.scrollTo({
-                top: target.offsetTop - 60,
+                top: target.offsetTop - 20,
                 behavior: "smooth",
               });
             }
@@ -282,13 +331,17 @@ export default function Home() {
           values={aboutValues}
           approach={aboutApproach}
         />
-        <TechStackSection />
-        <ProjectsSection projects={projects} />
-        <SkillsSection skills={skills} />
+        <SkillsSection />
         <ExperienceSection experiences={experiences} />
+        <ProjectsSection projects={projects} />
+        <UiUxFigmaSection
+          summary="I leverage Figma to design responsive, user-centric interfaces that bridge the gap between creativity and functionality. From wireframes to high-fidelity prototypes, I create design systems that maintain consistency while captivating users."
+          uiuxExperience={figmaExperience}
+          figmaProjects={figmaProjects}
+        />
         <ContactSection
           email="abdlatefkhatib@email.com"
-          cvLink="/public/AbdulatifSelemResume2.pdf"
+          cvLink="/Abdulatif_Selem_CV.pdf"
         />
       </div>
     </>
