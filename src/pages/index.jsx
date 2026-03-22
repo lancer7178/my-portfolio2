@@ -108,7 +108,7 @@ const projects = [
     title: "Nova Space",
     description:
       "An immersive space exploration website featuring stunning 3D visuals and interactive elements. Powered by Three.js, it educates users about universe exploration and astronomy with smooth animations and captivating design.",
-    image: "/nova2.png",
+    image: "/nova.png",
     link: "https://nova-space-mu.vercel.app",
     rating: 5,
     technologies: [
