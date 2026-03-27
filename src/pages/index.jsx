@@ -139,6 +139,22 @@ const projects = [
     bowmen: false,
   },
     {
+    title:"Aurum",
+    description: "Real-time gold market analytics and insights. Stay ahead of the curve with precision data.",
+    image: "/aurum.png",
+    link: "https://aurum-tracker-gold.vercel.app",
+    rating: 5,
+    technologies: [
+      "react",
+      "next.js",
+      "Tailwind CSS",
+      "GoldAPI",
+      "framer-motion",
+      
+    ],
+    bowmen: false,
+  },
+    {
     title: "Dr. Abdel-Moneim's Clinic",
     description:
       "A professional mental health clinic website providing comprehensive information about services, treatment options, and appointment booking. Built with React and Next.js, featuring smooth animations and bilingual support for accessibility.",
