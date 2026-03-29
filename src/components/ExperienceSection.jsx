@@ -62,7 +62,7 @@ export default function ExperienceSection({ experiences = [] }) {
     <section
       id="experience"
       ref={sectionRef}
-      className="relative py-32 px-6 md:px-12 bg-[#06060A] text-white overflow-hidden"
+      className="relative py-20 px-6 md:px-12 bg-[#06060A] text-white overflow-hidden"
     >
       <div
         ref={numberRef}
@@ -114,7 +114,7 @@ export default function ExperienceSection({ experiences = [] }) {
                     {exp.role}
                   </span>
                 </div>
-                <p className="text-[#555570] text-xs sm:text-sm leading-relaxed">
+                <p className="text-[#AAAABD] text-xs sm:text-sm leading-relaxed">
                   {exp.description}
                 </p>
               </div>

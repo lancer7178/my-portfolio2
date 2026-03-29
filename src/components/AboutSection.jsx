@@ -80,7 +80,7 @@ export default function AboutSection({ intro, values, approach }) {
     <section
       id="about"
       ref={sectionRef}
-      className="relative py-32 px-6 md:px-12 bg-[#06060A] text-white overflow-hidden"
+      className="relative py-20 px-6 md:px-12 bg-[#06060A] text-white overflow-hidden"
     >
       <div
         ref={numberRef}

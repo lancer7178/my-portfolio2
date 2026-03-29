@@ -93,7 +93,7 @@ export default function ProjectsSection({ projects = [] }) {
 
   if (!Array.isArray(projects) || projects.length === 0) {
     return (
-      <section className="py-24 text-center text-[#555570] bg-[#06060A]">
+      <section className="py-20 text-center text-[#555570] bg-[#06060A]">
         No projects to display.
       </section>
     );
@@ -107,7 +107,7 @@ export default function ProjectsSection({ projects = [] }) {
     <section
       id="projects"
       ref={sectionRef}
-      className="relative py-32 px-6 md:px-12 bg-gradient-to-b from-[#06060A] via-[#05050A] to-[#06060A] text-white overflow-hidden"
+      className="relative py-20 px-6 md:px-12 bg-gradient-to-b from-[#06060A] via-[#05050A] to-[#06060A] text-white overflow-hidden"
     >
       <div
         ref={numberRef}
@@ -118,7 +118,7 @@ export default function ProjectsSection({ projects = [] }) {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto">
-        <div ref={headerRef} className="mb-20">
+        <div ref={headerRef} className="mb-12">
           <p className="mono text-xs text-[#22D3EE] tracking-[0.3em] mb-4">{`// PORTFOLIO`}</p>
           <h2 className="text-5xl sm:text-6xl lg:text-7xl font-outfit font-black tracking-tight leading-none">
             <span className="text-white italic">SELECTED </span>
@@ -138,7 +138,7 @@ export default function ProjectsSection({ projects = [] }) {
 
         <div
           ref={gridRef}
-          className="grid gap-4 sm:gap-8 md:grid-cols-2 xl:grid-cols-3"
+          className="grid gap-3 sm:gap-6 md:grid-cols-2 xl:grid-cols-3"
         >
           {displayedProjects.map((project, idx) => (
             <div
@@ -166,7 +166,7 @@ export default function ProjectsSection({ projects = [] }) {
                 )}
               </div>
 
-              <div className="flex-1 flex flex-col p-6 gap-4">
+              <div className="flex-1 flex flex-col p-4 sm:p-6 gap-3">
                 <div>
                   <h3 className="text-lg font-bold font-outfit text-[#EAEAEF] group-hover:text-[#22D3EE] transition-colors duration-300 mb-2">
                     {project.title || "Untitled Project"}
@@ -224,7 +224,7 @@ export default function ProjectsSection({ projects = [] }) {
         </div>
 
         {totalPages > 1 && (
-          <div className="mt-12 sm:mt-16 flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
+          <div className="mt-8 sm:mt-12 flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
             <button
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}

@@ -105,10 +105,6 @@ export default function Navbar() {
             </button>
           );
         })}
-
-        <span className="hidden sm:block mono text-[10px] text-[#555570] ml-3 whitespace-nowrap">
-          LOCAL / {currentTime}
-        </span>
       </div>
     </nav>
   );

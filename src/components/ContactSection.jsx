@@ -90,7 +90,7 @@ export default function ContactSection({
     <section
       id="contact"
       ref={sectionRef}
-      className="relative py-32 px-6 md:px-12 bg-[#06060A] text-white overflow-hidden"
+      className="relative py-20 px-6 md:px-12 bg-[#06060A] text-white overflow-hidden"
     >
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-[#22D3EE]/4 rounded-full blur-[200px] pointer-events-none" />
 
@@ -106,8 +106,8 @@ export default function ContactSection({
             <span className="text-outline-accent">TOGETHER</span>
           </h2>
           <p className="mt-8 text-[#555570] text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
-            Ready to elevate your brand or start a new project? Let&apos;s connect
-            and build something amazing together.
+            Ready to elevate your brand or start a new project? Let&apos;s
+            connect and build something amazing together.
           </p>
         </div>
 

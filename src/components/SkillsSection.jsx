@@ -114,7 +114,7 @@ export default function SkillsSection() {
     <section
       id="skills"
       ref={sectionRef}
-      className="relative py-32 px-6 md:px-12 bg-gradient-to-b from-[#06060A] via-[#08080F] to-[#06060A] text-white overflow-hidden"
+      className="relative py-20 px-6 md:px-12 bg-gradient-to-b from-[#06060A] via-[#08080F] to-[#06060A] text-white overflow-hidden"
     >
       <div
         ref={numberRef}

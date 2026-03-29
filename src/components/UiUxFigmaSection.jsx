@@ -31,12 +31,13 @@ function useTilt(intensity = 15) {
         transition: "transform 0.1s ease-out",
       });
     },
-    [intensity]
+    [intensity],
   );
 
   const onMouseLeave = useCallback(() => {
     setStyle({
-      transform: "perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)",
+      transform:
+        "perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)",
       transition: "transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)",
     });
   }, []);
@@ -65,14 +66,16 @@ function ExperienceCard({ item, idx }) {
       <div className="absolute -top-8 -right-8 w-32 h-32 bg-[#22D3EE] rounded-full blur-[60px] opacity-0 group-hover:opacity-[0.08] transition-opacity duration-700 pointer-events-none" />
 
       {/* Step number */}
-      <div className="flex items-center gap-3 mb-5">
+      <div className="flex items-center gap-3 mb-3">
         <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-[#22D3EE]/15 to-[#818CF8]/10 border border-[#22D3EE]/20 text-[#22D3EE] text-sm font-bold font-mono">
           {String(idx + 1).padStart(2, "0")}
         </span>
-        <span className="text-lg text-[#22D3EE]/60">{icons[idx % icons.length]}</span>
+        <span className="text-lg text-[#22D3EE]/60">
+          {icons[idx % icons.length]}
+        </span>
       </div>
 
-      <h3 className="text-xl font-bold font-outfit text-[#EAEAEF] group-hover:text-[#22D3EE] transition-colors duration-300 mb-3">
+      <h3 className="text-lg font-bold font-outfit text-[#EAEAEF] group-hover:text-[#22D3EE] transition-colors duration-300 mb-2">
         {item.title}
       </h3>
       <div className="h-0.5 w-10 bg-gradient-to-r from-[#22D3EE]/50 to-[#818CF8]/30 rounded-full group-hover:w-16 transition-all duration-500 mb-4" />
@@ -157,8 +160,12 @@ function ProjectCard3D({ project, idx, isActive, onSelect }) {
       </div>
 
       {/* Hover glow effect */}
-      <div className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{ boxShadow: "inset 0 0 60px rgba(34,211,238,0.04), 0 8px 32px rgba(34,211,238,0.08)" }}
+      <div
+        className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{
+          boxShadow:
+            "inset 0 0 60px rgba(34,211,238,0.04), 0 8px 32px rgba(34,211,238,0.08)",
+        }}
       />
     </motion.article>
   );
@@ -180,15 +187,15 @@ export default function UiUxFigmaSection({
   const projectsWithEmbed = useMemo(
     () =>
       figmaProjects.filter(
-        (project) => project?.embedUrl || project?.liveEmbedUrl
+        (project) => project?.embedUrl || project?.liveEmbedUrl,
       ),
-    [figmaProjects]
+    [figmaProjects],
   );
 
   return (
     <section
       id="uiux"
-      className="relative py-32 px-6 md:px-12 bg-gradient-to-b from-[#06060A] via-[#05050A] to-[#06060A] text-white overflow-hidden"
+      className="relative pt-20 md:pt-1 pb-6 md:pb-20 px-6 md:px-12 bg-gradient-to-b from-[#06060A] via-[#05050A] to-[#06060A] text-white overflow-hidden"
     >
       {/* Ambient glow blobs */}
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#818CF8] blur-[250px] opacity-[0.04] rounded-full pointer-events-none" />
@@ -196,17 +203,30 @@ export default function UiUxFigmaSection({
 
       {/* Orbiting dots */}
       <div className="orbit-container absolute top-20 right-20 w-32 h-32 pointer-events-none hidden lg:block">
-        <span className="orbit-dot" style={{ "--orbit-size": "60px", "--orbit-dur": "8s" }} />
-        <span className="orbit-dot" style={{ "--orbit-size": "60px", "--orbit-dur": "8s", animationDelay: "4s" }} />
+        <span
+          className="orbit-dot"
+          style={{ "--orbit-size": "60px", "--orbit-dur": "8s" }}
+        />
+        <span
+          className="orbit-dot"
+          style={{
+            "--orbit-size": "60px",
+            "--orbit-dur": "8s",
+            animationDelay: "4s",
+          }}
+        />
       </div>
       <div className="orbit-container absolute bottom-40 left-10 w-24 h-24 pointer-events-none hidden lg:block">
-        <span className="orbit-dot" style={{ "--orbit-size": "44px", "--orbit-dur": "6s" }} />
+        <span
+          className="orbit-dot"
+          style={{ "--orbit-size": "44px", "--orbit-dur": "6s" }}
+        />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* Section Header */}
         <motion.div
-          className="mb-20"
+          className="mb-8"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -230,7 +250,7 @@ export default function UiUxFigmaSection({
 
         {/* ─── Experience / Process Steps ─── */}
         {uiuxExperience.length > 0 && (
-          <div className="mb-20">
+          <div className="mb-16">
             <motion.p
               className="mono text-xs text-[#818CF8] tracking-[0.3em] mb-8"
               initial={{ opacity: 0 }}
@@ -238,12 +258,16 @@ export default function UiUxFigmaSection({
               viewport={{ once: true }}
             >{`// DESIGN PROCESS`}</motion.p>
 
-            <div className="relative grid md:grid-cols-3 gap-6">
+            <div className="relative grid md:grid-cols-3 gap-5">
               {/* Connector line (desktop) */}
               <div className="step-connector hidden md:block absolute top-[34px] left-[calc(16.66%+20px)] right-[calc(16.66%+20px)] h-[2px]" />
 
               {uiuxExperience.map((item, idx) => (
-                <ExperienceCard key={`${item.title}-${idx}`} item={item} idx={idx} />
+                <ExperienceCard
+                  key={`${item.title}-${idx}`}
+                  item={item}
+                  idx={idx}
+                />
               ))}
             </div>
           </div>
@@ -252,7 +276,7 @@ export default function UiUxFigmaSection({
         {/* ─── Figma Live Preview ─── */}
         {activeEmbedUrl && (
           <motion.div
-            className="mb-20"
+            className="mb-16"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -299,13 +323,13 @@ export default function UiUxFigmaSection({
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <p className="mono text-xs text-[#22D3EE] tracking-[0.3em] mb-4">{`// PORTFOLIO`}</p>
-            <h3 className="text-3xl font-bold font-outfit text-white mb-8">
+            <p className="mono text-xs text-[#22D3EE] tracking-[0.3em] mb-3">{`// PORTFOLIO`}</p>
+            <h3 className="text-3xl font-bold font-outfit text-white mb-6">
               Design Collection
             </h3>
           </motion.div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {figmaProjects.map((project, idx) => (
               <ProjectCard3D
                 key={`${project.title}-${idx}`}
@@ -319,7 +343,8 @@ export default function UiUxFigmaSection({
 
           {projectsWithEmbed.length === 0 && figmaProjects.length > 0 && (
             <p className="mt-4 text-sm text-[#555570]">
-              Add an embed URL to your project object to enable live preview switching.
+              Add an embed URL to your project object to enable live preview
+              switching.
             </p>
           )}
         </div>
